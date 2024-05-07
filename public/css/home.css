@@ -1,0 +1,45 @@
+body {
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+#logo {
+    background: linear-gradient(0deg, #000000 -16.67%, #555555 106.67%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: 10vh;
+    color: whitesmoke;
+    font-size: 2rem;
+}
+
+#logo > img {
+    width: 50%; 
+}
+
+nav {
+    background: linear-gradient(0deg, #000000 -16.67%, #555555 106.67%);
+    height: 10vh;
+    color: whitesmoke;
+    font-size: 2rem;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+}
+
+nav > i:hover, i:active {
+    color: goldenrod;
+    cursor: pointer;
+}
+
+nav > a {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+#container {
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: 80vh;
+}
