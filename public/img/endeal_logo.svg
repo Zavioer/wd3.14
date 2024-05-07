@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="43.939198mm"
+   height="10.914447mm"
+   viewBox="0 0 43.939198 10.914447"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
+   sodipodi:docname="endeal_logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4"
+     inkscape:cx="98.5"
+     inkscape:cy="2.875"
+     inkscape:window-width="1499"
+     inkscape:window-height="1243"
+     inkscape:window-x="844"
+     inkscape:window-y="369"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showguides="false"
+     labelstyle="default">
+    <sodipodi:guide
+       position="43.93821,287.82134"
+       orientation="1,0"
+       id="guide1"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="15.765904,289.24094"
+       orientation="1,0"
+       id="guide2"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient1"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#efb318;stop-opacity:1;"
+         offset="0.31999999"
+         id="stop1" />
+      <stop
+         style="stop-color:#b78b1b;stop-opacity:1;"
+         offset="0.81440973"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="58.048489"
+       y1="33.418991"
+       x2="58.041241"
+       y2="26.118813"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline;opacity:1"
+     transform="translate(-35.767841,-24.317143)">
+    <g
+       id="g2"
+       transform="matrix(1.035683,0,0,1.1870425,-2.84419,-6.589806)"
+       style="display:inline">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:url(#linearGradient2);stroke-width:0.264583"
+         x="36.85273"
+         y="33.838318"
+         id="text1"><tspan
+           id="tspan1"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.2889px;font-family:Fredoka;-inkscape-font-specification:'Fredoka Bold';fill:url(#linearGradient2);stroke-width:0.264583"
+           x="36.85273"
+           y="33.838318"
+           sodipodi:role="line">ENDEAL</tspan></text>
+      <rect
+         style="fill:#ffffff;stroke-width:0.267266"
+         id="rect1"
+         width="28.172625"
+         height="1.0039179"
+         x="51.534416"
+         y="34.227673" />
+    </g>
+  </g>
+</svg>
