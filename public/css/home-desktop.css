@@ -1,0 +1,90 @@
+@import url("components.css");
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&display=swap');
+
+body {
+    margin: 0;
+
+    font-family: "Heebo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: 10% 80% 10%;
+}
+
+.top-bar {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    background: linear-gradient(0deg, #000000 -16.67%, #555555 106.67%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    /* padding: 1rem 0; */
+    height: 5vh;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: ro;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top-bar i {
+    color: white;
+    font-size: 2.5rem;
+    margin-right: 1rem;
+}
+
+.top-bar .logo {
+    border-right: 4px solid white;
+    margin: 0;
+    height: 5vh; 
+    width: 25%;
+    box-sizing: border-box;
+}
+
+nav {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 4;
+
+    box-sizing: border-box;
+    border-right: 4px solid black;
+    height: 95vh;
+}
+
+.content {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    padding: 1rem;
+    min-height: calc(90vh - 2rem);
+}
+
+.content-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+
+footer {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+
+    background: linear-gradient(360deg, #737373 0%, #000000 100%);
+    color: white;
+    padding: 1rem 0;
+    box-sizing: border-box;
+    height: calc(5vh);
+}

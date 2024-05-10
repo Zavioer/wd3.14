@@ -14,6 +14,7 @@ body {
     background: linear-gradient(180deg, #6C6C6C 0%, rgba(0, 0, 0, 0.86) 68.5%);
     background-repeat: no-repeat;
     height: 100vh;
+    margin: 0;
 
     font-family: "Heebo", sans-serif;
     font-optical-sizing: auto;
@@ -21,12 +22,7 @@ body {
     font-style: normal;
 }
 
-.column-center-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+
 
 .column-center-stretch {
     display: flex;
@@ -117,4 +113,24 @@ body {
 
     overflow: auto;
     scrollbar-width: none;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.container-left {
+    background: url('../img/salesman.jpg');
+    filter: blur(2px);
+    width: 60vw;
+}
+
+.container-login-outer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
