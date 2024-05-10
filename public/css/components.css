@@ -12,6 +12,13 @@
     color: black;
 }
 
+.textarea-base {
+    border: 2px solid black;
+    outline: none;
+    padding: 0.25rem;
+    resize: none;
+} 
+
 .select-base:focus-visible {
     border: 2px solid goldenrod;
 }
@@ -27,6 +34,14 @@
 
 .button-base:hover {
     border: 2px solid goldenrod;
+}
+
+.form-button-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 0.25rem;
 }
 
 .badge-large {
@@ -45,6 +60,39 @@
     padding: 0.5rem;
 }
 
+.badge-box {
+    box-sizing: border-box;
+    border: 2px solid black;
+
+    padding: 0.5rem;
+
+    /* display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; */
+}
+.badge-base {
+    display: flex;
+    flex-direction: row;
+    border: 2px solid black;
+}
+
+.badge-base > img {
+    border-right: 2px solid black;
+    background-color: gray;
+}
+
+.badge-base-content {
+    width: 85%;
+    padding: 0 0.25rem;
+}
+
+.badges-column-2 {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(3, auto);
+    gap: 0.25rem;
+    box-sizing: border-box;
+}
 /* based on https://www.freecodecamp.org/news/how-to-build-a-calendar-with-css-grid/ */
 .calendar {
     background: linear-gradient(180deg, #666666 0%, #000000 100%);
@@ -78,4 +126,68 @@
     border: 0;
     color: white;
     background: none;
+}
+
+.row-space-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.column-center-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.column-space-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-section-header,
+.menu-entry {
+    border-bottom: 1px solid black;
+    padding: 1rem;
+    text-transform: uppercase;
+}
+
+.menu-section-header {
+    font-weight: bold;
+}
+
+.menu-entry i {
+    margin-right: 0.25em;
+}
+
+.menu-entry:hover {
+    background-color: goldenrod;
+    cursor: pointer;
+}
+
+.form-base-desktop {
+    padding: 1rem;
+    border: 2px solid black;
+    width: 80%;
+}
+
+.form-input-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, auto);
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
+}
+
+
+.flex-row {
+    display: flex ;
+    flex-direction: row;
 }

@@ -1,0 +1,16 @@
+#description {
+    grid-row: 3 / 6;
+}
+
+.content-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.filter-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: 0.25rem;
+}
