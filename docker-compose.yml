@@ -27,6 +27,11 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+    environment:
+      - USERNAME=${DBUSERNAME}
+      - PASSWORD=${PASSWORD}
+      - HOST=${HOST}
+      - DATABASE=${DATABASE}
     volumes:
       - .:/app
     networks:
