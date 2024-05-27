@@ -73,7 +73,8 @@ class SecurityController extends AppController {
             $street,
             $houseNumber,
             $postalCode,
-            2 //TODO temporary salesman role id
+            2, //TODO temporary salesman role id
+            0 // Not important here
         );
 
         $this->userRepository->addUser($user);

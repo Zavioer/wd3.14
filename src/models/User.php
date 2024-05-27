@@ -11,6 +11,7 @@ class User {
     private $house_number;
     private $postal_code;
     private $role_id;
+    private $id;
 
     public function __construct(
         string $email,
@@ -22,7 +23,8 @@ class User {
         string $street,
         string $house_number,
         string $postal_code,
-        int $role_id
+        int $role_id,
+        int $id
     ) {
         $this->email = $email;
         $this->password = $password;
@@ -34,6 +36,7 @@ class User {
         $this->house_number = $house_number;
         $this->postal_code = $postal_code;
         $this->role_id = $role_id;
+        $this->id = $id;
     }
 
     public function getEmail(): string 
@@ -61,7 +64,7 @@ class User {
         return $this->last_name;
     }
 
-    public function getLicenseCode(): string
+    public function getLicenceCode(): string
     {
         return $this->licence_code;
     }
@@ -84,5 +87,9 @@ class User {
     public function getRoleId(): string
     {
         return $this->role_id;
+    }
+    public function getID(): int
+    {
+        return $this->id;
     }
 }
