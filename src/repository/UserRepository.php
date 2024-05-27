@@ -31,7 +31,8 @@ class UserRepository extends Repository
             $user['street'],
             $user['house_number'],
             $user['postal_code'],
-            $user['role_id']
+            $user['role_id'],
+            $user['id']
         );
     }
 
@@ -50,7 +51,7 @@ class UserRepository extends Repository
             $user->getLastName(),
             $user->getEmail(),
             $user->getPassword(),
-            $user->getLicenseCode(),
+            $user->getLicenceCode(),
             $user->getCity(),
             $user->getStreet(),
             $user->getHouseNumber(),
@@ -101,5 +102,80 @@ class UserRepository extends Repository
             DELETE FROM user_session WHERE session_id = ?
         ');
         $stmt->execute([session_id()]);
+        session_regenerate_id(true);
+    }
+
+    public function getUsersByRole(string $role) {
+        $stmt = $this->database->connect()->prepare('
+            SELECT u.* 
+            FROM user_account u 
+            JOIN role r ON u.role_id = r.id 
+            WHERE r.name = :role
+        ');
+        $stmt->bindParam(':role', $role, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $users = []; 
+
+        foreach ($result as $user) {
+            $newUser = new User(
+                $user['email'],
+                $user['password'],
+                $user['first_name'],
+                $user['last_name'],
+                $user['license_code'],
+                $user['city'],
+                $user['street'],
+                $user['house_number'],
+                $user['postal_code'],
+                $user['role_id'],
+                $user['id']
+            );
+            array_push($users, $newUser);
+        } 
+
+        return $users;
+    }
+
+    public function getUserBySessionID(string $sessionID) {
+        $stmt = $this->database->connect()->prepare('
+            SELECT u.* 
+            FROM user_account u 
+            JOIN user_session s on s.user_id = u.id
+            WHERE s.session_id = :sessionID
+        ');
+        $stmt->bindParam(':sessionID', $sessionID, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result == false) {
+            return null;
+        }
+        
+        $user = new User(
+            $result['email'],
+            $result['password'],
+            $result['first_name'],
+            $result['last_name'],
+            $result['license_code'],
+            $result['city'],
+            $result['street'],
+            $result['house_number'],
+            $result['postal_code'],
+            $result['role_id']
+        );
+
+        return $user;
+    }
+
+    public function deleteUserById(int $id) {
+        $stmt = $this->database->connect()->prepare('
+            DELETE FROM user_account
+            WHERE id = :userID
+        ');
+        $stmt->bindParam(':userID', $id, PDO::PARAM_STR);
+        $stmt->execute();
     }
 }
