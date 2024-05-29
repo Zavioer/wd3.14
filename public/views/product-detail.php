@@ -19,13 +19,15 @@
         <i class="fa-solid fa-gear"></i>
     </nav>
     <div id="container">
-        <h3>PRODUCT NAME</h3>
-        <div class="badge-large">
-            <img src="" alt="badge-large-img">
-            <div class="badge-large-content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut placerat elit mauris, ut efficitur velit accumsan ut. Praesent eget viverra neque. Aenean iaculis condimentum venenatis. Integer vel vehicula nibh. Integer elementum lectus sagittis velit gravida, eget pharetra libero fermentum. Sed consequat mauris non turpis iaculis, ut porttitor ipsum ultrices. In vitae ex in ante aliquet semper. 
+        <?php if(isset($product)): ?>
+            <h3><?= $product->getName()?></h3>
+            <div class="badge-large">
+                <img src="" alt="badge-large-img">
+                <div class="badge-large-content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut placerat elit mauris, ut efficitur velit accumsan ut. Praesent eget viverra neque. Aenean iaculis condimentum venenatis. Integer vel vehicula nibh. Integer elementum lectus sagittis velit gravida, eget pharetra libero fermentum. Sed consequat mauris non turpis iaculis, ut porttitor ipsum ultrices. In vitae ex in ante aliquet semper. 
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </body>
 </html>
