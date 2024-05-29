@@ -15,5 +15,8 @@ Router::get('userDelete', 'UserController', [new AuthMiddleware()]);
 Router::post('login', 'SecurityController');
 Router::post('register', 'SecurityController');
 Router::post('logout', 'SecurityController', [new AuthMiddleware()]);
+Router::get('products', 'ProductController', []);
+Router::get('productDetail', 'ProductController', []);
+Router::post('addProduct', 'ProductController', []);
 
 Router::run($path);
