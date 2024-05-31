@@ -18,5 +18,7 @@ Router::post('logout', 'SecurityController', [new AuthMiddleware()]);
 Router::get('products', 'ProductController', []);
 Router::get('productDetail', 'ProductController', []);
 Router::post('addProduct', 'ProductController', []);
+Router::get('clients', 'ClientController', []);
+Router::get('addClient', 'ClientController', []);
 
 Router::run($path);
