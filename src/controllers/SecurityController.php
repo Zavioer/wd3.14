@@ -16,7 +16,12 @@ class SecurityController extends AppController {
     public function login()
     {
         if (!$this->isPost()) {
-            return $this->render('login-desktop');
+            if (!is_null($_SESSION['user_id'])) {
+                $url = "http://$_SERVER[HTTP_HOST]";
+                header("Location: {$url}/dashboard");
+            }
+
+            return $this->render('login');
         }
 
         $email = $_POST['email'];
@@ -25,27 +30,38 @@ class SecurityController extends AppController {
         $user = $this->userRepository->getUserByEmail($email);
 
         if (!$user) {
-            return $this->render('login-desktop', ['messages' => ['User not found!']]);
+            return $this->render('login', ['messages' => ['User not found!']]);
         }
 
         if ($user->getEmail() !== $email) {
-            return $this->render('login-desktop', ['messages' => ['User with this email not exist!']]);
+            return $this->render('login', ['messages' => ['User with this email not exist!']]);
         }
         
         if (!password_verify($password, $user->getPassword())) {
-            return $this->render('login-desktop', ['messages' => ['Wrong password!']]);
+            return $this->render('login', ['messages' => ['Wrong password!']]);
+        }
+        
+        if (session_status() == PHP_SESSION_ACTIVE) {
+            $this->userRepository->registerLoginSession($user, session_id());
+            $_SESSION['user_id'] = $user->getId();
+        } else {
+            return $this->render('login', ['messages' => ['Internal server error when login!']]);
         }
 
-        $this->userRepository->registerLoginSession($user);
 
         $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/dashboard");
+        if ($user->getRole()->getName() !== 'salesman') {
+            header("Location: {$url}/dashboard");
+        } else {
+            header("Location: {$url}/home");
+        }
     }
 
     public function register()
     {
         if (!$this->isPost()) {
-            return $this->render('salesman-add-d');
+            $roles = $this->userRepository->getUserAvailableRoles();
+            return $this->render('salesman-add', ['roles' => $roles]);
         }
 
         $email = $_POST['email'];
@@ -58,6 +74,7 @@ class SecurityController extends AppController {
         $street = $_POST['street'];
         $houseNumber = $_POST['house-number'];
         $postalCode = $_POST['postal-code'];
+        $roleId = $_POST['role'];
 
         if ($password !== $confirmedPassword) {
             return $this->render('register', ['messages' => ['Please provide proper password']]);
@@ -73,18 +90,20 @@ class SecurityController extends AppController {
             $street,
             $houseNumber,
             $postalCode,
-            2, //TODO temporary salesman role id
+            $roleId,
             0 // Not important here
         );
 
         $this->userRepository->addUser($user);
 
-        return $this->render('login-desktop', ['messages' => ['You\'ve been succesfully registrated!']]);
+        return $this->render('login', ['messages' => ['You\'ve been succesfully registrated!']]);
     }
 
     public function logout()
     {
-        $this->userRepository->logout();
+        $this->userRepository->deleteUserSession(session_id());
+        $_SESSION = [];
+        session_regenerate_id(true);
         $url = "http://$_SERVER[HTTP_HOST]";
         header("Location: {$url}/login");
     }

@@ -32,7 +32,6 @@ class Router
 
     public static function run($url)
     {
-
         $urlParts = explode("/", $url);
         $action = $urlParts[0];
 
@@ -46,8 +45,8 @@ class Router
 
         $id = $urlParts[1] ?? '';
         
-        $wrapped = self::wrapMiddleware($url, $object, $action);
-        $wrapped($id);
+        $wrapped = self::wrapMiddleware($action, $object, $action);
+        $wrapped(['input' => $id]);
     }
 
     private static function wrapMiddleware($url, $object, $action) {

@@ -23,53 +23,77 @@
 
         <div class="top-bar">
             <div class="logo column-center-center">
-                <img src="./public/img/endeal_logo.svg" alt="endeal_logo">
+                <img src="/public/img/endeal_logo.svg" alt="endeal_logo">
             </div>
+            <div class="avatar">
+
             <i class="fa-solid fa-circle-user"></i>
+            <div class="user-menu">
+                <div>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+            </div>
         </div> 
 
         <nav>
             <div class="menu-list">
                 <div class="menu-section-header">
-                    salesman
+                    Salesman
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-person-circle-plus"></i>
-                    Add
+                    <a href="/register">
+                        <i class="fa-solid fa-person-circle-plus"></i>
+                        Add
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-person-circle-question"></i>
-                    detail
+                    <a href="/users">
+                        <i class="fa-solid fa-person-circle-question"></i>
+                        Detail
+                    </a>
                 </div>
                 <div class="menu-section-header">
-                    product
+                    Product
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-plus"></i>
-                    add
+                    <a href="/productAdd">
+                        <i class="fa-solid fa-plus"></i>
+                        Add
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-list"></i>
-                    list
+                    <a href="/products">
+                        <i class="fa-solid fa-list"></i>
+                        List
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
-                    reports
+                    <a href="#">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                        Reports
+                    </a>
                 </div>
                 <div class="menu-section-header">
-                    clients
+                    Clients
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-plus"></i>
-                    add
+                    <a href="/clientAdd">
+                        <i class="fa-solid fa-plus"></i>
+                        Add
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-list"></i>
-                    list
+                    <a href="/clients">
+                        <i class="fa-solid fa-list"></i>
+                        List
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
-                    reports
+                    <a href="#">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                        Reports
+                    </a>
                 </div>
             </div>
         </nav>
