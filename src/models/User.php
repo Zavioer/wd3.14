@@ -12,6 +12,9 @@ class User {
     private $postal_code;
     private $role_id;
     private $id;
+    private $role;
+    private $isAuthorized = FALSE;
+    private $permission = [];
 
     public function __construct(
         string $email,
@@ -91,5 +94,35 @@ class User {
     public function getID(): int
     {
         return $this->id;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    public function authorize()
+    {
+        $this->isAuthorized = True;
+    }
+
+    public function isAuthorized()
+    {
+        return $this->isAuthorized();
+    }
+
+    public function setPermissions($permissions)
+    {
+        $this->permissions = $permissions;
+    }
+
+    public function getPermissions()
+    {
+        return $this->permissions;
     }
 }

@@ -17,6 +17,7 @@ class AuthMiddleware
                 echo "<h1>Unauthorized</h1>";
                 exit();
             } 
+            $input['user'] = $user;
             return $next($input);
         }
 

@@ -4,61 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desktop home</title>
-    <link rel="stylesheet" href="./public/css/home-desktop.css" type="text/css">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/public/css/main.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div id="container">
         <div class="top-bar">
             <div class="logo column-center-center">
-                <img src="./public/img/endeal_logo.svg" alt="endeal_logo">
+                <img src="/public/img/endeal_logo.svg" alt="endeal_logo">
             </div>
+            <div class="avatar">
+
             <i class="fa-solid fa-circle-user"></i>
+            <div class="user-menu">
+                <div>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+            </div>
         </div> 
 
         <nav>
             <div class="menu-list">
                 <div class="menu-section-header">
-                    salesman
+                    Salesman
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-person-circle-plus"></i>
-                    Add
+                    <a href="/register">
+                        <i class="fa-solid fa-person-circle-plus"></i>
+                        Add
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-person-circle-question"></i>
-                    detail
+                    <a href="/users">
+                        <i class="fa-solid fa-person-circle-question"></i>
+                        Detail
+                    </a>
                 </div>
                 <div class="menu-section-header">
-                    product
+                    Product
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-plus"></i>
-                    add
+                    <a href="/productAdd">
+                        <i class="fa-solid fa-plus"></i>
+                        Add
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-list"></i>
-                    list
+                    <a href="/products">
+                        <i class="fa-solid fa-list"></i>
+                        List
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
-                    reports
+                    <a href="#">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                        Reports
+                    </a>
                 </div>
                 <div class="menu-section-header">
-                    clients
+                    Clients
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-plus"></i>
-                    add
+                    <a href="/clientAdd">
+                        <i class="fa-solid fa-plus"></i>
+                        Add
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-list"></i>
-                    list
+                    <a href="/clients">
+                        <i class="fa-solid fa-list"></i>
+                        List
+                    </a>
                 </div>
                 <div class="menu-entry">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
-                    reports
+                    <a href="#">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                        Reports
+                    </a>
                 </div>
             </div>
         </nav>

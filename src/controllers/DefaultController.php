@@ -4,10 +4,14 @@ require_once 'AppController.php';
 
 class DefaultController extends AppController {
     public function index() {
-        $this->render('login-desktop');
+        $this->render('login');
     }
 
     public function dashboard() {
-        $this->render('home-desktop');
+        $this->render('dashboard');
+    }
+
+    public function home() {
+        $this->render('home');
     }
 }
