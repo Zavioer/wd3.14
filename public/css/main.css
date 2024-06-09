@@ -137,6 +137,7 @@ footer {
 #form-login > input {
     width: 100%;
 }
+
 #container-login {
     margin-top: 0.5rem;
     background-color: whitesmoke;
@@ -145,8 +146,6 @@ footer {
 .form-base {
     gap: 1rem;
 }
-
-
 
 .row-center-space-around {
     display: flex;
@@ -165,31 +164,6 @@ footer {
 .f-column {
     display: flex;
     flex-direction: column;
-}
-
-.badge-base {
-    display: flex;
-    flex-direction: row;
-    border: 2px solid black;
-}
-
-.badge-base > img {
-    border-right: 2px solid black;
-    background-color: gray;
-}
-
-.badge-base-content {
-    width: 85%;
-    padding: 0 0.25rem;
-}
-
-.badges-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    overflow: auto;
-    scrollbar-width: none;
 }
 
 .container {
@@ -220,6 +194,10 @@ footer {
     display: none;
 }
 
+.hamburger-menu {
+    display: none;
+}
+
 @media screen and (max-width: 600px) {
     .container-left {
         display: none;
@@ -240,21 +218,7 @@ footer {
         height: 7vh;
         grid-column-start: 1;
         grid-column-end: 3;
-    }
-
-    .avatar {
-        width: 100%;
-        display: flex;
-        flex-direction: row-reverse;
-    }
-
-    .avatar i {
-        display: block;
-        justify-self: start;
-    }
-
-    .avatar:hover nav {
-        left: 0;
+        justify-content: space-between;
     }
 
     nav {
@@ -265,6 +229,14 @@ footer {
         transform: left 0.3s ease;
         background-color: whitesmoke;
         z-index: 1;
+        margin-top: 7vh;
+        width: 70%;
+    }
+
+
+
+    .show-nav {
+        left: 0;
     }
 
     #menu-toggle {
@@ -322,10 +294,30 @@ footer {
         transition: all 0.3s ease;
     }
 
-    .top-bar #menu-toggle input:checked ~ nav {
-        left: 0;
+    .hamburger-menu {
+        justify-self: flex-end;
+        display: flex;
+        align-items: center;
+    }
+
+    .hamburger-menu button {
+        padding: 0;
+        margin: 0;
+        border: none;
+        background: none;
     }
     
+    .hamburger-menu i {
+        margin-left: 1rem;
+        text-align: center;
+    }
+
+    .hamburger-menu:hover {
+        cursor: pointer;
+    }
+
+
+
     .logo {
         display: none;
     }

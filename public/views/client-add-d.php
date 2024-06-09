@@ -25,54 +25,11 @@
             <div class="logo column-center-center">
                 <img src="./public/img/endeal_logo.svg" alt="endeal_logo">
             </div>
-            <i class="fa-solid fa-circle-user"></i>
+
+            <?php include __DIR__.'/components/avatar.php'; ?>
         </div> 
 
-        <nav>
-            <div class="menu-list">
-                <div class="menu-section-header">
-                    salesman
-                </div>
-                <div class="menu-entry">
-                    <i class="fa-solid fa-person-circle-plus"></i>
-                    Add
-                </div>
-                <div class="menu-entry">
-                    <i class="fa-solid fa-person-circle-question"></i>
-                    detail
-                </div>
-                <div class="menu-section-header">
-                    product
-                </div>
-                <div class="menu-entry">
-                    <i class="fa-solid fa-plus"></i>
-                    add
-                </div>
-                <div class="menu-entry">
-                    <i class="fa-solid fa-list"></i>
-                    list
-                </div>
-                <div class="menu-entry">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
-                    reports
-                </div>
-                <div class="menu-section-header">
-                    clients
-                </div>
-                <div class="menu-entry">
-                    <i class="fa-solid fa-plus"></i>
-                    add
-                </div>
-                <div class="menu-entry">
-                    <i class="fa-solid fa-list"></i>
-                    list
-                </div>
-                <div class="menu-entry">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
-                    reports
-                </div>
-            </div>
-        </nav>
+        <?php include __DIR__.'/components/nav.php'; ?>
 
         <div class="content column-center-center">
             <h3>NEW CLIENT</h3>

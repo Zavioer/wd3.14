@@ -40,9 +40,40 @@ class ClientController extends AppController {
         return $this->render('client-add-d', ['messages' => ['Client succesfully added']]);
     }
 
-    public function clients() {
+    public function clients($req) {
         $products = $this->clientRepository->getClients();
-        return $this->render('client-list', ['clients' => $products]);
+        $user = $req['user'];
+        return $this->render('client-list', ['clients' => $products, 'user' => $user]);
     }
 
+    public function clientDetail($req) {
+        $id = $req['input'];
+        // var_dump($client, json_encode($client));
+        if ($_GET['type'] === 'json') {
+            $client = $this->clientRepository->getClientById($id, true);
+            header('Content-Type: application/json');
+            $encoded = json_encode($client, JSON_FORCE_OBJECT);
+            echo $encoded;
+
+        }
+        $client = $this->clientRepository->getClientById($id);
+        return $client;
+    }
+
+    public function clientDelete($req) {
+        $id = $req['input'];
+        $this->clientRepository->deleteClientById($id);
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/clients");
+    }
+
+    public function clientModify($req) {
+        if (!$this->isPost()) {
+            $id = $req['input'];
+            $user = $req['user'];
+            $client = $this->clientRepository->getClientById($id);
+            $this->render('client-modify', ['client' => $client, 'user' => $user]);
+        }
+
+    }
 }
