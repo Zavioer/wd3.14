@@ -12,9 +12,10 @@ class ProductController extends AppController {
         $this->productRepository = new ProductRepository();
     }
         
-    public function addProduct() {
+    public function productAdd($req) {
         if (!$this->isPost()) {
-            return $this->render('product-add-d');
+            $productTypes = $this->productRepository->getProductTypes();
+            return $this->render('product-add', ['productTypes' => $productTypes, 'user' => $req['user']]);
         }
 
         $name = $_POST['name'];
@@ -32,21 +33,71 @@ class ProductController extends AppController {
             $description,
             $price,
             $uom,
-            $type
+            $type,
+            'https://placehold.co/600x400'
         );
 
-        $this->productRepository->addProduct($product);
-
-        return $this->render('product-add-d', ['messages' => ['Product succesfully added']]);
+        $this->productRepository->addProduct($product, $quantity);
+        $productTypes = $this->productRepository->getProductTypes();
+        return $this->render('product-add', [
+            'messages' => ['Product succesfully added'],
+            'productTypes' => $productTypes,
+        ]);
     }
 
-    public function products() {
+    public function products($req) {
+        // TODO: check user agent and render appropriate page
         $products = $this->productRepository->getProducts();
-        return $this->render('product-list', ['products' => $products]);
+        $user = $req['user'];
+        return $this->render('product-list', ['products' => $products, 'user' => $user]);
     }
 
-    public function productDetail(int $id) {
+    public function productsMobile($req) {
+        // TODO: check user agent and render appropriate page
+        $products = $this->productRepository->getProducts();
+        $user = $req['user'];
+        return $this->render('product-list-m', ['products' => $products, 'user' => $user]);
+    }
+
+    public function productDetail($req) {
+        $id = $req['input'];
         $product = $this->productRepository->getProductById($id);
         return $this->render('product-detail', ['product' => $product]);
+    }
+
+    public function productDelete($req) {
+        $id = $req['input'];
+        $this->productRepository->deleteProduct($id);
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/productsDesktop");
+    }
+
+    public function productModify($req) {
+        if (!$this->isPost()) {
+            $id = $req['input'];
+            $user = $req['user'];
+            $productTypes = $this->productRepository->getProductTypes();
+            $product = $this->productRepository->getProductById($id);
+            return $this->render('product-modify', [
+                'product' => $product,
+                'productTypes' => $productTypes,
+                'user' => $user,
+            ]);
+        }
+
+        $updatedProduct = new Product(
+            $_POST['id'],
+            $_POST['name'],
+            $_POST['upc'],
+            $_POST['description'],
+            $_POST['price'],
+            $_POST['uom'],
+            $_POST['type'],
+            'https://placehold.co/600x400'
+        );
+
+        $this->productRepository->updateProduct($updatedProduct);
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/products");
     }
 }

@@ -7,7 +7,10 @@ class Product {
     private $description;
     private $price;
     private $uom;
-    private $product_type_id;
+    private $productTypeId;
+    private $imgPath;
+    private $warehouseQuantity = 0;
+    private $type;
 
     public function __construct(
         int $id,
@@ -16,7 +19,8 @@ class Product {
         string $description,
         float $price,
         string $uom,
-        int $product_type_id
+        int $productTypeId,
+        string $imgPath
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -24,7 +28,8 @@ class Product {
         $this->description = $description;
         $this->price = $price;
         $this->uom = $uom;
-        $this->product_type_id = $product_type_id;
+        $this->productTypeId = $productTypeId;
+        $this->imgPath = $imgPath;
     }
 
     public function getName(): string
@@ -54,6 +59,36 @@ class Product {
 
     public function getProductTypeId(): int
     {
-        return $this->product_type_id;
+        return $this->productTypeId;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getImgPath(): string
+    {
+        return $this->imgPath;
+    }
+
+    public function setWarehouseQuantity($quantity)
+    {
+        $this->warehouseQuantity = $quantity;
+    }
+
+    public function getWarehouseQuantity()
+    {
+        return $this->warehouseQuantity;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function getType()
+    {
+        return $this->type;
     }
 }

@@ -70,7 +70,7 @@ class Client {
         return $this->company_name;
     }
 
-    public function getID(): int
+    public function getId(): int
     {
         return $this->id;
     }
