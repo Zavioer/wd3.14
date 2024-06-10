@@ -11,30 +11,9 @@
 </head>
 <body>
     <div id="container">
-        <div class="messages">
-            <?php if(isset($messages)): ?>
-                <?php foreach($messages as $message): ?>
-                    <div class="message-box">
-                        <p><?= $message ?></p>
-                        <button class="m-close-btn">&times;</button>
-                    </div> 
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
+        <?php include __DIR__.'/components/messages.php'; ?>
 
-        <div class="top-bar">
-            <div class="logo column-center-center">
-                <img src="/public/img/endeal_logo.svg" alt="endeal_logo">
-            </div>
-
-            <div class="hamburger-menu">
-                <button class="hamburger-menu-btn">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-            
-            <?php include __DIR__.'/components/avatar.php'; ?>
-        </div> 
+        <?php include __DIR__.'/components/top-bar.php'; ?>
         
         <?php include __DIR__.'/components/nav.php'; ?>
 
@@ -44,8 +23,7 @@
                 <div class="form-input-wrapper">
                     <input type="text" name="name" placeholder="Name" class="text-input-base">
                     <input type="text" name="upc" placeholder="UPC" class="text-input-base">
-                    <textarea class="textarea-base" name="description" placeholder="Description" id="description">
-                    </textarea>
+                    <textarea class="textarea-base" name="description" placeholder="Description" id="description"></textarea>
                     <input type="text" name="price" placeholder="Price" class="text-input-base">
                     
                     <select name="type" id="type-select" class="select-input-base">
@@ -58,8 +36,8 @@
                         <?php endif; ?>
                     </select>
 
-                    <input type="text" name="uom" placeholder="uom" class="text-input-base">
-                    <input type="text" name="quantity" placeholder="quantity" class="text-input-base">
+                    <input type="text" name="uom" placeholder="UOM" class="text-input-base">
+                    <input type="text" name="quantity" placeholder="Quantity" class="text-input-base">
                 </div>
 
                 <div class="form-button-section">
@@ -68,9 +46,8 @@
                 </div>
             </form>
         </div>
-        <footer class="column-center-center">
-            Copyright &copy; Endeal 2024
-        </footer>
+
+        <?php include __DIR__.'/components/footer.php'; ?>
     </div>
 </body>
 </html>

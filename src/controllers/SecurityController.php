@@ -57,11 +57,12 @@ class SecurityController extends AppController {
         }
     }
 
-    public function register()
+    public function register($req)
     {
         if (!$this->isPost()) {
             $roles = $this->userRepository->getUserAvailableRoles();
-            return $this->render('salesman-add', ['roles' => $roles]);
+            $user = $req['user'];
+            return $this->render('salesman-add', ['roles' => $roles, 'user' => $user]);
         }
 
         $email = $_POST['email'];

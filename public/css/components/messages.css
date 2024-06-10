@@ -1,0 +1,41 @@
+.messages {
+    position: fixed;
+    top: 0.25rem;
+    width: 100%;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.message-box {
+    background-color: var(--success-color);
+    border: var(--border-base);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s;
+    padding: 0 0.5rem;
+    width: 60%;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+.m-close-btn {
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 32px;
+}
+
+@media screen and (max-width: 792px) {
+    .message-box {
+        width: 85%;
+    }
+}

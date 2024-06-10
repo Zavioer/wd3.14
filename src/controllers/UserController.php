@@ -12,9 +12,10 @@ class UserController extends AppController {
         $this->userRepository = new UserRepository();
     }
 
-    public function users() {
+    public function users($req) {
         $users = $this->userRepository->getUsersByRole('salesman');
-        $this->render('salesman-list', ['users' => $users]);
+        $user = $req['user'];
+        $this->render('salesman-list', ['users' => $users, 'user' => $user]);
     }
 
     public function userDelete($req) {

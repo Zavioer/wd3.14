@@ -1,0 +1,33 @@
+/* based on https://www.freecodecamp.org/news/how-to-build-a-calendar-with-css-grid/ */
+.calendar {
+    background: linear-gradient(180deg, #666666 0%, #000000 100%);
+    padding: 1.5rem;
+    color: whitesmoke;
+}
+
+.month-indicator {
+    font-weight: 500 ;
+    text-align: center;
+    margin-bottom: 0.50rem;
+}
+
+.day-of-week,
+.date-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+/* positioning first day of given montg */
+.date-grid button:first-child {
+    grid-column: 3;
+}
+
+.day-of-week > * {
+    text-align: center;
+}
+
+.date-grid button {
+    border: 0;
+    color: white;
+    background: none;
+}
