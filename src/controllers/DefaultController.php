@@ -7,8 +7,9 @@ class DefaultController extends AppController {
         $this->render('login');
     }
 
-    public function dashboard() {
-        $this->render('dashboard');
+    public function dashboard($req) {
+        $user = $req['user'];
+        $this->render('dashboard', ['user' => $user]);
     }
 
     public function home() {

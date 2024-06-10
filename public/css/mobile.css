@@ -1,49 +1,62 @@
+@import url("variables.css");
 @import url("components.css");
+@import url("shortcuts.css");
 
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&display=swap');
 
 body {
-    background: none;
     margin: 0;
     padding: 0;
+
+    font-family: "Heebo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
 #logo {
     background: linear-gradient(0deg, #000000 -16.67%, #555555 106.67%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     height: 10vh;
-    color: whitesmoke;
     font-size: 2rem;
+    color: var(--text-light-color);
 }
 
-#logo > img {
+#logo img {
+    height: 100%;
     width: 50%; 
 }
 
 nav {
-    background: linear-gradient(0deg, #000000 -16.67%, #555555 106.67%);
-    height: 10vh;
-    color: whitesmoke;
-    font-size: 2rem;
     position: absolute;
     bottom: 0;
+    height: 10vh;
     width: 100vw;
+    background: linear-gradient(0deg, #000000 -16.67%, #555555 106.67%);
+    color: var(--background-color);
+    font-size: 2rem;
 }
 
 nav > i:hover, i:active {
-    color: goldenrod;
+    color: var(--secondary-color);
     cursor: pointer;
 }
 
-nav > a {
-    color: whitesmoke;
+nav a {
+    color: var(--text-light-color);
     text-decoration: none;
 }
 
 #container {
-    padding: 0 2rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    
     overflow: auto;
+    padding: 0 var(--gap-4x);
     height: 80vh;
+}
+
+#container h3 {
+    margin-top: 0;
 }

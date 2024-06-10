@@ -1,0 +1,19 @@
+:root {
+    /* Colors */
+    --primary-color: black;
+    --secondary-color: goldenrod;
+    --text-light-color: white;
+    --success-color: lightgreen;
+    --error-color-rgb: 240, 128, 128;
+    --error-color: rgb(var(--error-color-rgb)); 
+    --background-color: whitesmoke;
+
+    /* Borders */
+    --border-base: 2px solid var(--primary-color);
+    --border-thin: 1px solid var(--primary-color);
+    
+    /* Gaps */
+    --gap-base: 0.25rem;
+    --gap-2x: 0.5rem;
+    --gap-4x: 1rem;
+}

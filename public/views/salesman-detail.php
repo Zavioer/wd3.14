@@ -11,92 +11,11 @@
 </head>
 <body>
     <div id="container">
-        <div class="messages">
-            <?php
-                if(isset($messages)){
-                    foreach($messages as $message) {
-                        echo $message;
-                    }
-                }
-            ?>
-        </div>
+        <?php include __DIR__.'/components/messages.php'; ?>
 
-        <div class="top-bar">
-            <div class="logo column-center-center">
-                <img src="/public/img/endeal_logo.svg" alt="endeal_logo">
-            </div>
-            <div class="avatar">
-
-            <i class="fa-solid fa-circle-user"></i>
-            <div class="user-menu">
-                <div>
-                    <a href="/logout">Logout</a>
-                </div>
-            </div>
-            </div>
-        </div> 
-
-        <nav>
-            <div class="menu-list">
-                <div class="menu-section-header">
-                    Salesman
-                </div>
-                <div class="menu-entry">
-                    <a href="/register">
-                        <i class="fa-solid fa-person-circle-plus"></i>
-                        Add
-                    </a>
-                </div>
-                <div class="menu-entry">
-                    <a href="/users">
-                        <i class="fa-solid fa-person-circle-question"></i>
-                        Detail
-                    </a>
-                </div>
-                <div class="menu-section-header">
-                    Product
-                </div>
-                <div class="menu-entry">
-                    <a href="/productAdd">
-                        <i class="fa-solid fa-plus"></i>
-                        Add
-                    </a>
-                </div>
-                <div class="menu-entry">
-                    <a href="/products">
-                        <i class="fa-solid fa-list"></i>
-                        List
-                    </a>
-                </div>
-                <div class="menu-entry">
-                    <a href="#">
-                        <i class="fa-solid fa-square-poll-vertical"></i>
-                        Reports
-                    </a>
-                </div>
-                <div class="menu-section-header">
-                    Clients
-                </div>
-                <div class="menu-entry">
-                    <a href="/clientAdd">
-                        <i class="fa-solid fa-plus"></i>
-                        Add
-                    </a>
-                </div>
-                <div class="menu-entry">
-                    <a href="/clients">
-                        <i class="fa-solid fa-list"></i>
-                        List
-                    </a>
-                </div>
-                <div class="menu-entry">
-                    <a href="#">
-                        <i class="fa-solid fa-square-poll-vertical"></i>
-                        Reports
-                    </a>
-                </div>
-            </div>
-        </nav>
+        <?php include __DIR__.'/components/top-bar.php'; ?>
+        
+        <?php include __DIR__.'/components/nav.php'; ?>
 
         <div class="content column-center-center">
             <h3>SALESMAN DETAIL</h3>
@@ -107,9 +26,8 @@
             ?>
             </table>
         </div>
-        <footer class="column-center-center">
-            Copyright &copy; Endeal 2024
-        </footer>
+
+        <?php include __DIR__.'/components/footer.php'; ?>
     </div>
 </body>
 </html>

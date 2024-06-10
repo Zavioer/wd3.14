@@ -20,8 +20,8 @@
         </div>
         <div class="menu-entry">
             <a href="/users">
-                <i class="fa-solid fa-person-circle-question"></i>
-                Detail
+                <i class="fa-solid fa-list"></i>
+                List
             </a>
         </div>
         <div class="menu-section-header">
@@ -42,12 +42,6 @@
         <div class="menu-section-header">
             Clients
         </div>
-        <!-- <div class="menu-entry">
-            <a href="/clientAdd">
-                <i class="fa-solid fa-plus"></i>
-                Add
-            </a>
-        </div> -->
         <div class="menu-entry">
             <a href="/clients">
                 <i class="fa-solid fa-list"></i>

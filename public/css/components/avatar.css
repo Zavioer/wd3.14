@@ -1,0 +1,11 @@
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.55rem;
+}
+
+.avatar p {
+    color: white;
+    text-transform: capitalize;
+}

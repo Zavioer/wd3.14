@@ -1,0 +1,27 @@
+.hamburger-menu {
+    display: none;
+}
+
+@media screen and (max-width: 792px) {
+    .hamburger-menu {
+        justify-self: flex-end;
+        display: flex;
+        align-items: center;
+    }
+
+    .hamburger-menu button {
+        padding: 0;
+        margin: 0;
+        border: none;
+        background: none;
+    }
+    
+    .hamburger-menu i {
+        margin-left: 1rem;
+        text-align: center;
+    }
+
+    .hamburger-menu:hover {
+        cursor: pointer;
+    }
+}

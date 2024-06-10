@@ -1,6 +1,10 @@
+@import url("variables.css");
 @import url("components.css");
+@import url("login.css");
+@import url("shortcuts.css");
 
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&display=swap');
+
 
 .heebo-regular {
     font-family: "Heebo", sans-serif;
@@ -9,11 +13,13 @@
     font-style: normal;
 }
 
+
+html {
+    height: 100%;
+}
+
 body {
-    background: rgb(2,0,36);
-    background: linear-gradient(180deg, #6C6C6C 0%, rgba(0, 0, 0, 0.86) 68.5%);
-    background-repeat: no-repeat;
-    height: 100vh;
+    height: 100%;
     margin: 0;
 
     font-family: "Heebo", sans-serif;
@@ -23,9 +29,14 @@ body {
 }
 
 #container {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: var(--background-color);
+
     display: grid;
     grid-template-columns: 25% 75%;
-    grid-template-rows: 10% 80% 10%;
+    grid-template-rows: auto 1fr auto;
 }
 
 .top-bar {
@@ -36,8 +47,7 @@ body {
 
     background: linear-gradient(0deg, #000000 -16.67%, #555555 106.67%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    /* padding: 1rem 0; */
-    height: 5vh;
+    height: 4rem;
     box-sizing: border-box;
 
     display: flex;
@@ -52,10 +62,10 @@ body {
     margin-right: 1rem;
 }
 
-.top-bar .logo {
+.logo {
     border-right: 4px solid white;
     margin: 0;
-    height: 5vh; 
+    height: 100%;
     width: 25%;
     box-sizing: border-box;
 }
@@ -68,7 +78,6 @@ nav {
 
     box-sizing: border-box;
     border-right: 4px solid black;
-    height: 95vh;
 }
 
 .content {
@@ -76,17 +85,20 @@ nav {
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
-    padding: 1rem;
-    min-height: calc(90vh - 2rem);
+    padding: var(--gap-4x);
 }
 
 .content-bottom {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 3rem;
+    gap: var(--gap-4x);
 }
 
+.content-bottom div {
+    box-sizing: border-box;
+    width: 100%;
+}
 
 footer {
     grid-column-start: 2;
@@ -95,129 +107,19 @@ footer {
     grid-row-end: 4;
 
     background: linear-gradient(360deg, #737373 0%, #000000 100%);
-    color: white;
-    padding: 1rem 0;
+    color: var(--text-light-color);
     box-sizing: border-box;
-    height: calc(5vh);
+    height: 4rem;
 }
 
-.column-center-stretch {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    flex-direction: column;
-}
-
-#container {
-    background-color: whitesmoke;
-}
-
-#form-login {
-    padding: 3rem;
-    /* width: 60vw; */
-}
-
-#form-login > a {
-    font-size: 10px;
-    text-decoration: none;
-    color: black;
-    align-self: flex-start;
-    box-sizing: content-box;
-}
-
-#form-login > input {
-    width: 100%;
-}
-
-#form-login > button {
-    box-sizing: content-box;
-    width: 100%;
-}
-
-#form-login > input {
-    width: 100%;
-}
-
-#container-login {
-    margin-top: 0.5rem;
-    background-color: whitesmoke;
-}
-
-.form-base {
-    gap: 1rem;
-}
-
-.row-center-space-around {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.column-center-space-around {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around; 
-    align-items: center;
-}
-
-.f-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    height: 100%;
-}
-
-.container-left {
-    background-image: url('../img/salesman.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 35% 0;
-    filter: blur(2px);
-    width: 40vw;
-}
-
-.container-login-outer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60vw;
-}
-
-#menu-toggle {
-    display: none;
-}
-
-.hamburger-menu {
-    display: none;
-}
-
-@media screen and (max-width: 600px) {
-    .container-left {
-        display: none;
-    }
-    
-    .container { 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
+@media screen and (max-width: 792px) {
     #container {
-        grid-template-columns: 100%;
-        grid-template-rows: 36% 60% 20%;
+        grid-template-columns: 1fr;
     }
 
     .top-bar {
-        height: 7vh;
         grid-column-start: 1;
-        grid-column-end: 3;
+        grid-column-end: 2;
         justify-content: space-between;
     }
 
@@ -233,90 +135,9 @@ footer {
         width: 70%;
     }
 
-
-
     .show-nav {
         left: 0;
     }
-
-    #menu-toggle {
-        display: block;
-        position: relative;
-        top: 0.25rem;
-        left: 0.25rem;
-        z-index: 1;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-
-    }
-
-    #menu-toggle input {
-        display: block;
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        top: -0.35rem;
-        left: 5px;
-        padding: 0;
-        cursor: pointer;
-        opacity: 0;
-        z-index: 2;
-        -webkit-touch-callout: none;
-    }
-
-    #menu-toogle label {
-        position: relative;
-        display: block;
-        width: 0.5rem;
-        height: 0.5rem;
-    }
-
-    #menu-toggle label span {
-        display: none;
-    }
-        
-    #menu-toggle label div {
-        display: block;
-        width: 30px;
-        height: 2px;
-        margin-bottom: 6px;
-        position: relative;
-        background: whitesmoke;
-        border-radius: 3px;
-        z-index: 1;
-        -webkit-transform-origin: 4px 0px;
-        -ms-transform-origin: 4px 0px;
-        transform-origin: 4px 0px;
-        -webkit-transition: all 0.3s ease;
-        -o-transition: all 0.3s ease;
-        transition: all 0.3s ease;
-    }
-
-    .hamburger-menu {
-        justify-self: flex-end;
-        display: flex;
-        align-items: center;
-    }
-
-    .hamburger-menu button {
-        padding: 0;
-        margin: 0;
-        border: none;
-        background: none;
-    }
-    
-    .hamburger-menu i {
-        margin-left: 1rem;
-        text-align: center;
-    }
-
-    .hamburger-menu:hover {
-        cursor: pointer;
-    }
-
-
 
     .logo {
         display: none;
@@ -324,15 +145,15 @@ footer {
     
     .content {
         grid-column-start: 1;
-        grid-column-end: 3;
-    }
-
-    .content h3 {
-        align-self: center !important;
+        grid-column-end: 2;
     }
 
     footer {
         grid-column-start: 1;
-        grid-column-end: 3;
+        grid-column-end: 2;
+    }
+
+    .content-bottom {
+        flex-direction: column;
     }
 }
