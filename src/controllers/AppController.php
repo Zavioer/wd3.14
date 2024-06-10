@@ -32,4 +32,11 @@ class AppController {
         }
         print $output;
     }
+
+    protected function jsonify($input)
+    {
+        header('Content-Type: application/json');
+        $encoded = json_encode($input);
+        echo $encoded;
+    }
 }
