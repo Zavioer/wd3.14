@@ -32,7 +32,8 @@ class ClientRepository extends Repository
             $result['street'],
             $result['house_number'],
             $result['postal_code'],
-            $result['company_name'],
+            $result['phone'],
+            $result['email'],
             $result['id']
         );
 
@@ -44,9 +45,9 @@ class ClientRepository extends Repository
         $stmt = $this->database->connect()->prepare('
             INSERT INTO client (
                 first_name, last_name, city, street, house_number, postal_code,
-                company_name
+                phone, email
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ');
 
         $stmt->execute([
@@ -56,7 +57,8 @@ class ClientRepository extends Repository
             $client->getStreet(),
             $client->getHouseNumber(),
             $client->getPostalCode(),
-            $client->getCompanyName()
+            $client->getPhone(),
+            $client->getEmail(),
         ]);
     }
 
@@ -84,7 +86,8 @@ class ClientRepository extends Repository
             $result['street'],
             $result['house_number'],
             $result['postal_code'],
-            $result['company_name'],
+            $result['phone'],
+            $result['email'],
             $result['id']
         );
     }
@@ -100,7 +103,8 @@ class ClientRepository extends Repository
             street = ?,
             house_number = ?,
             postal_code = ?,
-            company_name = ?,
+            phone = ?,
+            email = ?,
             WHERE id = ?
         ');
         $stmt->execute([
@@ -110,7 +114,8 @@ class ClientRepository extends Repository
             $client->getStreet(),
             $client->getHouseNumber(),
             $client->getPostalCode(),
-            $client->getCompanyName()
+            $client->getPhone(),
+            $client->getEmail()
         ]);
     }
 
@@ -132,7 +137,8 @@ class ClientRepository extends Repository
                 $client['street'],
                 $client['house_number'],
                 $client['postal_code'],
-                $client['company_name'],
+                $client['phone'],
+                $client['email'],
                 $client['id']
             );
             array_push($clients, $newClient);
