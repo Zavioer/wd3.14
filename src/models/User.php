@@ -27,7 +27,7 @@ class User {
         string $house_number,
         string $postal_code,
         int $role_id,
-        int $id
+        int $id = -1
     ) {
         $this->email = $email;
         $this->password = $password;

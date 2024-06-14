@@ -1,6 +1,10 @@
 <?php
 
 class Role {
+    const ADMIN = 'admin';
+    const SALESMAN = 'salesman';
+    const ANALYST = 'analyst';
+
     private $id;
     private $name;
 

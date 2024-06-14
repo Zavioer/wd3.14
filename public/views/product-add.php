@@ -21,12 +21,12 @@
             <h3>NEW PRODUCT</h3>
             <form action="/productAdd" method="POST" class="form-base-desktop">
                 <div class="form-input-wrapper">
-                    <input type="text" name="name" placeholder="Name" class="text-input-base">
-                    <input type="text" name="upc" placeholder="UPC" class="text-input-base">
+                    <input type="text" required name="name" placeholder="Name" class="text-input-base">
+                    <input type="text" required name="upc" placeholder="UPC" class="text-input-base">
                     <textarea class="textarea-base" name="description" placeholder="Description" id="description"></textarea>
-                    <input type="text" name="price" placeholder="Price" class="text-input-base">
+                    <input type="number" step="0.01" min="0" required name="price" placeholder="Price" class="text-input-base">
                     
-                    <select name="type" id="type-select" class="select-input-base">
+                    <select name="type" required id="type-select" class="select-input-base">
                         <option value="">Choose product type</option>
                         <hr>
                         <?php if(isset($productTypes)): ?>
@@ -36,8 +36,8 @@
                         <?php endif; ?>
                     </select>
 
-                    <input type="text" name="uom" placeholder="UOM" class="text-input-base">
-                    <input type="text" name="quantity" placeholder="Quantity" class="text-input-base">
+                    <input type="text" required name="uom" placeholder="UOM" class="text-input-base">
+                    <input type="number" step="0.01" min="0" required name="quantity" placeholder="Quantity" class="text-input-base">
                 </div>
 
                 <div class="form-button-section">

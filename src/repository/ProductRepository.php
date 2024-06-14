@@ -8,25 +8,29 @@ class ProductRepository extends Repository
 {
     public function addProduct(Product $product, $quantity=0)
     {
-        $stmt = $this->database->connect()->prepare('
-            INSERT INTO product (
-                name, upc, description, price, uom, product_type_id
-            )
-            VALUES (?, ?, ?, ?, ?, ?)
-            RETURNING *
-        ');
-         
-        $stmt->execute([
-            $product->getName(),
-            $product->getUpc(),
-            $product->getDescription(),
-            $product->getPrice(),
-            $product->getUom(),
-            $product->getProductTypeId()
-        ]);
+        try {
+            $stmt = $this->database->connect()->prepare('
+                INSERT INTO product (
+                    name, upc, description, price, uom, product_type_id
+                )
+                VALUES (?, ?, ?, ?, ?, ?)
+                RETURNING *
+            ');
+            
+            $stmt->execute([
+                $product->getName(),
+                $product->getUpc(),
+                $product->getDescription(),
+                $product->getPrice(),
+                $product->getUom(),
+                $product->getProductTypeId()
+            ]);
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->addProductWarehouseQuantity($result['id'], $quantity);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->addProductWarehouseQuantity($result['id'], $quantity);
+        } catch(PDOException $e) {
+            return $e;
+        }
     }
 
     public function getProducts()
@@ -62,32 +66,36 @@ class ProductRepository extends Repository
 
     public function getProductById(int $id)
     {
-        $stmt = $this->database->connect()->prepare('
-            SELECT * FROM product
-            WHERE id = :id
-        ');
-         
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->database->connect()->prepare('
+                SELECT * FROM product
+                WHERE id = :id
+            ');
+            
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $product = new Product(
-            $result['id'],
-            $result['name'],
-            $result['upc'],
-            $result['description'],
-            $result['price'],
-            $result['uom'],
-            $result['product_type_id'],
-            $result['img_path']
-        );
-        $quantity = $this->getProductWarehouseQuantity($product->getId());
-        $product->setWarehouseQuantity($quantity);
+            $product = new Product(
+                $result['id'],
+                $result['name'],
+                $result['upc'],
+                $result['description'],
+                $result['price'],
+                $result['uom'],
+                $result['product_type_id'],
+                $result['img_path']
+            );
+            $quantity = $this->getProductWarehouseQuantity($product->getId());
+            $product->setWarehouseQuantity($quantity);
 
-        $productType = $this->getProductTypeByProductId($product->getProductTypeId());
-        $product->setType($productType);
+            $productType = $this->getProductTypeByProductId($product->getProductTypeId());
+            $product->setType($productType);
 
-        return $product;
+            return $product;
+        } catch (PDOException $e) {
+            return $e;
+        }
     }
     
     public function updateProduct(Product $updatedProduct)
@@ -115,12 +123,16 @@ class ProductRepository extends Repository
 
     public function deleteProduct(int $id)
     {
-        $stmt = $this->database->connect()->prepare('
-            DELETE FROM product WHERE id = :id
-        ');
+        try {
+            $stmt = $this->database->connect()->prepare('
+                DELETE FROM product WHERE id = :id
+            ');
 
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            return $e;
+        }
     }
 
     private function getProductWarehouseQuantity($id)

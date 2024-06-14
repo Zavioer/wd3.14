@@ -2,9 +2,9 @@
 
 require_once 'AppController.php';
 require_once __DIR__.'../../repository/UserRepository.php';
+require_once __DIR__.'../../models/Role.php';
 
 class SecurityController extends AppController {
-    
     private $userRepository;
 
     public function __construct()
@@ -13,48 +13,80 @@ class SecurityController extends AppController {
         $this->userRepository = new UserRepository();
     }
 
-    public function login()
+    private function redirectToWebOrMobile($user)
+    {
+        if ($user->getRole()->getName() !== Role::SALESMAN) {
+            $this->redirect('dashboard');
+        } else {
+            $this->redirect('home');
+        }
+    }
+
+    private function generateTemporaryPassword($length = 8)
+    {
+        $upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $lowerCase = 'abcdefghijklmnopqrstuvwxyz';
+        $numbers = '0123456789';
+        $specialChars = '!@#$%^&*()_+{}|:<>?[];,./`~';
+
+        // Combine all character sets
+        $allChars = $upperCase . $lowerCase . $numbers . $specialChars;
+
+        // Ensure password includes at least one character from each set
+        $password = $upperCase[random_int(0, strlen($upperCase) - 1)];
+        $password .= $lowerCase[random_int(0, strlen($lowerCase) - 1)];
+        $password .= $numbers[random_int(0, strlen($numbers) - 1)];
+        $password .= $specialChars[random_int(0, strlen($specialChars) - 1)];
+
+        // Fill the remaining length of the password with random characters from all sets
+        for ($i = 4; $i < $length; $i++) {
+            $password .= $allChars[random_int(0, strlen($allChars) - 1)];
+        }
+
+        $password = str_shuffle($password);
+        return $password;
+    }
+
+    private function saveTmpPasswordToFile($password)
+    {
+        # Temporary function for demo purpose
+        # TODO: send password to mail instead of temporary save to file
+        file_put_contents(__DIR__.'/../../data/tmp_password.txt', $password);
+    }
+
+    public function login($req)
     {
         if (!$this->isPost()) {
             if (!is_null($_SESSION['user_id'])) {
-                $url = "http://$_SERVER[HTTP_HOST]";
-                header("Location: {$url}/dashboard");
+                $user = $this->userRepository->getUserById($_SESSION['user_id']); 
+                $this->redirectToWebOrMobile($user);
             }
-
             return $this->render('login');
         }
 
         $email = $_POST['email'];
         $password = $_POST['password'];
-
         $user = $this->userRepository->getUserByEmail($email);
 
         if (!$user) {
-            return $this->render('login', ['messages' => ['User not found!']]);
-        }
-
-        if ($user->getEmail() !== $email) {
-            return $this->render('login', ['messages' => ['User with this email not exist!']]);
+            $messages = [new Message('User not found!', Message::ERROR)];
+            return $this->render('login', ['messages' => $messages]);
         }
         
         if (!password_verify($password, $user->getPassword())) {
-            return $this->render('login', ['messages' => ['Wrong password!']]);
+            $messages = [new Message('Wrong password!', Message::ERROR)];
+            return $this->render('login', ['messages' => $messages]);
         }
         
         if (session_status() == PHP_SESSION_ACTIVE) {
             $this->userRepository->registerLoginSession($user, session_id());
             $_SESSION['user_id'] = $user->getId();
         } else {
-            return $this->render('login', ['messages' => ['Internal server error when login!']]);
+            $messages = [new Message('Internal server error!', Message::ERROR)];
+            return $this->render('login', ['messages' => $messages]);
         }
-
-
-        $url = "http://$_SERVER[HTTP_HOST]";
-        if ($user->getRole()->getName() !== 'salesman') {
-            header("Location: {$url}/dashboard");
-        } else {
-            header("Location: {$url}/home");
-        }
+        
+        $this->redirectToWebOrMobile($user);
     }
 
     public function register($req)
@@ -66,38 +98,98 @@ class SecurityController extends AppController {
         }
 
         $email = $_POST['email'];
-        $password = 'asdf'; // TODO auto generated password for 1st login
-        $confirmedPassword = 'asdf'; //
+        $password = $this->generateTemporaryPassword(); 
         $firstName = $_POST['first-name'];
         $lastName = $_POST['last-name'];
-        $licenceCode = $_POST['licence-code'];
+        $licenseCode = $_POST['licence-code'];
         $city = $_POST['city'];
         $street = $_POST['street'];
         $houseNumber = $_POST['house-number'];
         $postalCode = $_POST['postal-code'];
         $roleId = $_POST['role'];
 
-        if ($password !== $confirmedPassword) {
-            return $this->render('register', ['messages' => ['Please provide proper password']]);
+        $baseValidator = new ValidatorExecutor([
+            new TextLengthValidator(3, 255)
+        ]);
+
+        $firstNameErrors = $baseValidator->run($firstName, 'First Name');
+        $lastNameErrors = $baseValidator->run($lastName, 'Last Name');
+
+        $emailValidator = new ValidatorExecutor([
+            new EmailValidator()
+        ]);
+        $emailErrors = $emailValidator->run($email, 'Email');
+
+        $licenseCodeErrors = $baseValidator->run($licenseCode, 'License Code');
+        $cityErrors = $baseValidator->run($city, 'City');
+        $streetErrors = $baseValidator->run($street, 'Street');
+        
+        $houseNumberValidator = new ValidatorExecutor([
+            new TextLengthValidator(0, 10)
+        ]);
+        $houseNumberErrors = $houseNumberValidator->run($houseNumber, 'House Number');
+
+        $postalCodeValidator = new ValidatorExecutor([
+            new TextLengthValidator(0, 5)
+        ]);
+        $postalCodeErrors = $postalCodeValidator->run($postalCode, 'Postal Code');
+
+        $errors = array_merge(
+            $firstNameErrors,
+            $lastNameErrors,
+            $emailErrors,
+            $licenseCodeErrors,
+            $cityErrors,
+            $streetErrors,
+            $houseNumberErrors,
+            $postalCodeErrors,
+        );
+
+        if (!empty($errors)) {
+            $messages = [];
+            foreach($errors as $errorText) {
+                array_push($messages, new Message($errorText, Message::ERROR));
+            }
+            $roles = $this->userRepository->getUserAvailableRoles();
+            $user = $req['user'];
+            return $this->render('salesman-add', [
+                'roles' => $roles,
+                'user' => $user,
+                'messages' => $messages
+            ]);
         }
 
-        $user = new User(
+        $newUser = new User(
             $email, 
             password_hash($password, PASSWORD_DEFAULT), 
             $firstName, 
             $lastName,
-            $licenceCode,
+            $licenseCode,
             $city,
             $street,
             $houseNumber,
             $postalCode,
-            $roleId,
-            0 // Not important here
+            $roleId
         );
 
-        $this->userRepository->addUser($user);
+        $result = $this->userRepository->addUser($newUser);
+        if ($result === null) {
+            $this->saveTmpPasswordToFile($password);
+            $this->redirect('salesman-list');
+            $messages = [
+                new Message('Successfully added new worker!', Message::SUCCESS),
+            ];
+        } else {
+            if ($result->getCode() == 23505) {
+                $messages = [new Message('User with given name or licence code already exists!', Message::ERROR)];
+            } else {
+                $messages = [new Message("Server Error when adding Product $e->getMessage()!", Message::ERROR)];
+            }
 
-        return $this->render('login', ['messages' => ['You\'ve been succesfully registrated!']]);
+            $user = $req['user'];
+            $roles = $this->userRepository->getUserAvailableRoles();
+            return $this->render('salesman-add', ['messages' => $messages, 'user' => $user, 'roles' => $roles]);
+        }
     }
 
     public function logout()
@@ -105,7 +197,6 @@ class SecurityController extends AppController {
         $this->userRepository->deleteUserSession(session_id());
         $_SESSION = [];
         session_regenerate_id(true);
-        $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/login");
+        $this->redirect('login');
     }
 }

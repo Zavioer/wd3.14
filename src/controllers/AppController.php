@@ -1,5 +1,9 @@
 <?php
 
+require_once __DIR__.'/../utils/Message.php';
+require_once __DIR__.'/../validators/ValidatorExecutor.php';
+require_once __DIR__.'/../validators/Validators.php';
+
 class AppController {
     private $request;
 
@@ -38,5 +42,15 @@ class AppController {
         header('Content-Type: application/json');
         $encoded = json_encode($input);
         echo $encoded;
+    }
+
+    static public function redirect($actionName, $responseCode = 0, $exit = FALSE)
+    {
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/{$actionName}", TRUE, $response_code);
+
+        if ($exit) {
+            exit();
+        }
     }
 }

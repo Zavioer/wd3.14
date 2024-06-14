@@ -12,9 +12,10 @@ class ClientController extends AppController {
         $this->clientRepository = new ClientRepository();
     }
         
-    public function addClient() {
+    public function addClient($req) {
         if (!$this->isPost()) {
-            return $this->render('client-add-d');
+            $user = $req['user'];
+            return $this->render('client-add-d', ['user' => $user]);
         }
 
         $firstName = $_POST['first-name'];
@@ -37,7 +38,10 @@ class ClientController extends AppController {
         );
         $this->clientRepository->addClient($client);
 
-        return $this->render('client-add-d', ['messages' => ['Client succesfully added']]);
+        $messages = [
+            new Message('Client succesfully added!', Message::SUCCESS),
+        ];
+        return $this->render('client-add-d', ['messages' => $messages]);
     }
 
     public function clients($req) {
@@ -72,6 +76,5 @@ class ClientController extends AppController {
             $client = $this->clientRepository->getClientById($id);
             $this->render('client-modify', ['client' => $client, 'user' => $user]);
         }
-
     }
 }
