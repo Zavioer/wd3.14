@@ -11,7 +11,7 @@
 }
 
 .message-box {
-    background-color: var(--success-color);
+    background-color: var(--neutral-color);
     border: var(--border-base);
     display: flex;
     justify-content: space-between;
@@ -32,6 +32,14 @@
     font-weight: bold;
     cursor: pointer;
     font-size: 32px;
+}
+
+.message-success {
+    background-color: var(--success-color);
+}
+
+.message-error {
+    background-color: var(--error-color);
 }
 
 @media screen and (max-width: 792px) {

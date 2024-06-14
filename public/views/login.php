@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/public/css/main.css" type="text/css">
+    <?php include __DIR__.'/components/js-scripts-base.php'; ?>
 </head>
 <body>
+    <?php include __DIR__.'/components/messages.php'; ?>
+
     <div class="container-login">
         <div class="img-cover">
             <img src="/public/img/salesman.jpg" alt="salesman cover">

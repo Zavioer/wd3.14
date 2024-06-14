@@ -15,6 +15,10 @@ Router::get('dashboard', 'DefaultController', [
 Router::get('home', 'DefaultController', [
     new AuthMiddleware()]);
 
+Router::get('forbidden', 'DefaultController');
+Router::get('unauthorized', 'DefaultController');
+Router::get('notFound', 'DefaultController');
+
 Router::post('login', 'SecurityController');
 Router::post('register', 'SecurityController', [
     new AuthorizationMiddleware('USER_ADD'), new AuthMiddleware()]);
@@ -51,6 +55,8 @@ Router::get('clientModify', 'ClientController', [
     new AuthorizationMiddleware('CLIENT_MODIFY'), new AuthMiddleware()]);
 Router::get('clientDelete', 'ClientController', [
     new AuthorizationMiddleware('CLIENT_DELETE'), new AuthMiddleware()]);
+Router::get('clientDetail', 'ClientController', [
+    new AuthorizationMiddleware('CLIENT_READ'), new AuthMiddleware()]);
 
 Router::post('orders', 'OrderController', [
     new AuthorizationMiddleware('ORDER_READ'), new AuthMiddleware()]);
@@ -59,9 +65,9 @@ Router::post('orderAdd', 'OrderController', [
 Router::post('orderResolve', 'OrderController', [
     new AuthorizationMiddleware('ORDER_MODIFY'), new AuthMiddleware()]);
 
-Router::post('ordersCountByProductType', 'ReportController', [
+Router::get('ordersCountByProductType', 'ReportController', [
     new AuthMiddleware()]);
-Router::post('monthlyIncome', 'ReportController', [
+Router::get('monthlyIncome', 'ReportController', [
     new AuthMiddleware()]);
 
 Router::run($path);

@@ -13,7 +13,7 @@ class DefaultController extends AppController {
     }
 
     public function index() {
-        $this->render('login');
+        $this->redirect('login');
     }
 
     public function dashboard($req) {
@@ -25,5 +25,17 @@ class DefaultController extends AppController {
 
     public function home() {
         $this->render('home');
+    }
+
+    public function forbidden() {
+        $this->render('errors/403');
+    }
+
+    public function unauthorized() {
+        $this->render('errors/401');
+    }
+
+    public function notFound() {
+        $this->render('/errors/404');
     }
 }

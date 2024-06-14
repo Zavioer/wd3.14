@@ -1,5 +1,6 @@
 <?php
 
+require_once 'src/controllers/AppController.php';
 require_once 'src/controllers/DefaultController.php';
 require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/UserController.php';
@@ -38,7 +39,7 @@ class Router
         $action = $urlParts[0];
 
         if (!array_key_exists($action, self::$routes)) {
-            die("Wrong url!");
+            AppController::redirect('notFound', 404, TRUE);
         }
 
         $controller = self::$routes[$action];

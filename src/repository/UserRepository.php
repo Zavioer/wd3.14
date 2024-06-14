@@ -158,26 +158,30 @@ class UserRepository extends Repository
 
     public function addUser(User $user)
     {
-        $stmt = $this->database->connect()->prepare('
-            INSERT INTO user_account (
-                first_name, last_name, email, password, license_code,
-                city, street, house_number, postal_code, role_id
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ');
+        try {
+            $stmt = $this->database->connect()->prepare('
+                INSERT INTO user_account (
+                    first_name, last_name, email, password, license_code,
+                    city, street, house_number, postal_code, role_id
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ');
 
-        $stmt->execute([
-            $user->getFirstName(),
-            $user->getLastName(),
-            $user->getEmail(),
-            $user->getPassword(),
-            $user->getLicenceCode(),
-            $user->getCity(),
-            $user->getStreet(),
-            $user->getHouseNumber(),
-            $user->getPostalCode(),
-            $user->getRoleId()
-        ]);
+            $stmt->execute([
+                $user->getFirstName(),
+                $user->getLastName(),
+                $user->getEmail(),
+                $user->getPassword(),
+                $user->getLicenceCode(),
+                $user->getCity(),
+                $user->getStreet(),
+                $user->getHouseNumber(),
+                $user->getPostalCode(),
+                $user->getRoleId()
+            ]);
+        } catch (PDOException $e) {
+            return $e;
+        }
     }
 
     public function updateUser(User $user) {

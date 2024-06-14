@@ -31,14 +31,14 @@
                         <?php endif; ?>
                     </select>
                             
-                    <input type="text" name="first-name" placeholder="First name" class="text-input-base">
-                    <input type="text" name="last-name" placeholder="Last name" class="text-input-base">
-                    <input type="text" name="city" placeholder="City" class="text-input-base">
-                    <input type="text" name="street" placeholder="Street" class="text-input-base">
-                    <input type="text" name="house-number" placeholder="House number" class="text-input-base">
-                    <input type="text" name="postal-code" placeholder="Postal code" class="text-input-base">
+                    <input type="text" required name="first-name" placeholder="First name" class="text-input-base">
+                    <input type="text" required name="last-name" placeholder="Last name" class="text-input-base">
+                    <input type="text" required name="city" placeholder="City" class="text-input-base">
+                    <input type="text" required name="street" placeholder="Street" class="text-input-base">
+                    <input type="text" required name="house-number" placeholder="House number" class="text-input-base">
+                    <input type="text" required name="postal-code" placeholder="Postal code" class="text-input-base">
 
-                    <select name="product" id="product-select" class="select-base select-input-base">
+                    <select name="product" required id="product-select" class="select-base select-input-base">
                         <option value="">Choose product</option>
                         <hr>
                         <?php if(isset($products)): ?>
@@ -48,8 +48,8 @@
                         <?php endif; ?>
                     </select>
                             
-                    <input type="text" name="amount" placeholder="Amount" class="text-input-base">
-                    <input type="text" name="discount" placeholder="Discount" class="text-input-base">
+                    <input type="number" required min="0" name="amount" placeholder="Amount" class="text-input-base">
+                    <input type="number" step="0.01" required min="0" max="1" name="discount" placeholder="Discount" class="text-input-base">
                     <button type="submit" class="button-base">ADD</button>
                 </div>
             </form>

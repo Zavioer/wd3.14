@@ -1,3 +1,5 @@
+<?php require_once __DIR__.'../../../../src/models/Role.php'; ?>
+
 <nav>
     <div class="menu-list">
         <div class="menu-section-header">
@@ -12,12 +14,16 @@
         <div class="menu-section-header">
             Salesman
         </div>
-        <div class="menu-entry">
-            <a href="/register">
-                <i class="fa-solid fa-person-circle-plus"></i>
-                Add
-            </a>
-        </div>
+        <?php if(isset($user)): ?>
+            <?php if($user->getRole()->getName() === ROLE::ADMIN): ?>
+                <div class="menu-entry">
+                    <a href="/register">
+                        <i class="fa-solid fa-person-circle-plus"></i>
+                        Add
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
         <div class="menu-entry">
             <a href="/users">
                 <i class="fa-solid fa-list"></i>
@@ -27,12 +33,16 @@
         <div class="menu-section-header">
             Product
         </div>
-        <div class="menu-entry">
-            <a href="/productAdd">
-                <i class="fa-solid fa-plus"></i>
-                Add
-            </a>
-        </div>
+        <?php if(isset($user)): ?>
+            <?php if($user->getRole()->getName() === ROLE::ADMIN): ?>
+                <div class="menu-entry">
+                    <a href="/productAdd">
+                        <i class="fa-solid fa-plus"></i>
+                        Add
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
         <div class="menu-entry">
             <a href="/products">
                 <i class="fa-solid fa-list"></i>

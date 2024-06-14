@@ -21,15 +21,15 @@
             <h3>NEW SALESMAN</h3>
             <form action="register" method="POST" class="form-base-desktop">
                 <div class="form-input-wrapper">
-                    <input type="text" name="first-name" placeholder="First name" class="text-input-base">
-                    <input type="text" name="last-name" placeholder="Last name" class="text-input-base">
-                    <input type="text" name="email" placeholder="Email" class="text-input-base">
-                    <input type="text" name="licence-code" placeholder="Licence code" class="text-input-base">
-                    <input type="text" name="city" placeholder="City" class="text-input-base">
-                    <input type="text" name="street" placeholder="Street" class="text-input-base">
-                    <input type="text" name="house-number" placeholder="House number" class="text-input-base">
-                    <input type="text" name="postal-code" placeholder="Postal code" class="text-input-base">
-                    <select name="role" id="role" class="select-input-base">
+                    <input type="text" required name="first-name" placeholder="First name" class="text-input-base">
+                    <input type="text" required name="last-name" placeholder="Last name" class="text-input-base">
+                    <input type="text" required name="email" placeholder="Email" class="text-input-base">
+                    <input type="text" required name="licence-code" placeholder="Licence code" class="text-input-base">
+                    <input type="text" required name="city" placeholder="City" class="text-input-base">
+                    <input type="text" required name="street" placeholder="Street" class="text-input-base">
+                    <input type="text" required name="house-number" placeholder="House number" class="text-input-base">
+                    <input type="text" required name="postal-code" placeholder="Postal code" class="text-input-base">
+                    <select name="role" required id="role" class="select-input-base">
                         <?php if(isset($roles)): ?>
                             <?php foreach ($roles as $role): ?>
                                 <?php if($role->getName() == 'salesman'): ?>
