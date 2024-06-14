@@ -1,48 +1,51 @@
 <?php
 
 class Client {
-    private $first_name;
-    private $last_name;
+    private $firstName;
+    private $lastName;
     private $city;
     private $street;
-    private $house_number;
-    private $postal_code;
-    private $company_name;
+    private $houseNumber;
+    private $postalCode;
+    private $phone;
+    private $email;
     private $id;
 
     public function __construct(
-        string $first_name,
-        string $last_name,
+        string $firstName,
+        string $lastName,
         string $city,
         string $street,
-        string $house_number,
-        string $postal_code,
-        string $company_name,
-        int $id
+        string $houseNumber,
+        string $postalCode,
+        ?string $phone = '',
+        ?string $email = '',
+        int $id = -1
     ) {
-        $this->first_name = $first_name;
-        $this->last_name = $last_name;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
         $this->city = $city;
         $this->street = $street;
-        $this->house_number = $house_number;
-        $this->postal_code = $postal_code;
-        $this->company_name = $company_name;
+        $this->houseNumber = $houseNumber;
+        $this->postalCode = $postalCode;
+        $this->phone = $phone;
+        $this->email = $email;
         $this->id = $id;
     }
 
     public function getFirstName(): string
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
     public function setFirstName(string $name): void
     {
-        $this->last_name = $name;
+        $this->lastName = $name;
     }
 
     public function getLastName(): string
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
     public function getCity(): string
@@ -57,17 +60,22 @@ class Client {
 
     public function getHouseNumber(): string
     {
-        return $this->house_number;
+        return $this->houseNumber;
     }
 
     public function getPostalCode(): string
     {
-        return $this->postal_code;
+        return $this->postalCode;
     }
 
-    public function getCompanyName(): string
+    public function getPhone(): ?string
     {
-        return $this->company_name;
+        return $this->phone;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
     }
 
     public function getId(): int

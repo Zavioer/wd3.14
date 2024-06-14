@@ -25,7 +25,8 @@
                         <tr>
                             <th>Name</th>
                             <th>Address</th>
-                            <th>Company name</th>
+                            <th>Phone numbe</th>
+                            <th>Email</th>
                             <th>Modify</th>
                             <th>Delete</th>
                         </tr>
@@ -35,7 +36,8 @@
                             <tr>
                                 <td data-title="Name"><?= "{$client->getFirstName()} {$client->getLastName()}" ?></td>
                                 <td data-title="Address"><?= "{$client->getCity()} {$client->getStreet()} {$client->getHouseNumber()}" ?></td>
-                                <td data-title="Company name"><?= $client->getCompanyName() ?></td>
+                                <td data-title="Phone number"><?= $client->getPhone() ?? '-'?></td>
+                                <td data-title="Email"><?= $client->getEmail() ?? '-'?></td>
                                 <td data-title="Modify"><a href=<?= "/clientModify/{$client->getId()}"?>><i class="fa-solid fa-pen-to-square"></i></a></td>
                                 <td data-title="Delete"><a href=<?= "/clientDelete/{$client->getId()}"?>><i class="fa-solid fa-trash-can"></i></a></td>
                             </tr>
