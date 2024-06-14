@@ -48,14 +48,12 @@ class ClientController extends AppController {
 
     public function clientDetail($req) {
         $id = $req['input'];
-        // var_dump($client, json_encode($client));
+        
         if ($_GET['type'] === 'json') {
             $client = $this->clientRepository->getClientById($id, true);
-            header('Content-Type: application/json');
-            $encoded = json_encode($client, JSON_FORCE_OBJECT);
-            echo $encoded;
-
+            $this->jsonify($client);
         }
+
         $client = $this->clientRepository->getClientById($id);
         return $client;
     }

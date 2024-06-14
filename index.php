@@ -59,4 +59,9 @@ Router::post('orderAdd', 'OrderController', [
 Router::post('orderResolve', 'OrderController', [
     new AuthorizationMiddleware('ORDER_MODIFY'), new AuthMiddleware()]);
 
+Router::post('ordersCountByProductType', 'ReportController', [
+    new AuthMiddleware()]);
+Router::post('monthlyIncome', 'ReportController', [
+    new AuthMiddleware()]);
+
 Router::run($path);
