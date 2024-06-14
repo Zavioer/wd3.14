@@ -10,10 +10,11 @@ class Database {
 
     public function __construct()
     {
-        $this->username = USERNAME;
-        $this->password = PASSWORD;
-        $this->host = HOST;
-        $this->database = DATABASE;
+        $config = Config::getInstance();
+        $this->username = $config->get('USERNAME');
+        $this->password = $config->get('PASSWORD');
+        $this->host = $config->get('HOST');
+        $this->database = $config->get('DATABASE');
     }
 
     public function connect()
