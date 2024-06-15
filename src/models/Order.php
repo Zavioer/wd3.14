@@ -2,57 +2,57 @@
 
 class Order {
     private $id;
-    private $client_id;
-    private $salesman_id;
-    private $creation_date;
-    private $finish_date;
-    private $total_price;
+    private $clientId;
+    private $salesmanId;
+    private $creationDate;
+    private $finishDate;
+    private $totalPrice;
     private $discount;
     private $state;
 
     public function __construct(
         int $id,
-        int $client_id,
-        int $salesman_id,
-        $creation_date,
-        $finish_date,
-        $total_price,
+        int $clientId,
+        int $salesmanId,
+        $creationDate,
+        $finishDate,
+        $totalPrice,
         $discount,
         $state
     ) {
         $this->id = $id;
-        $this->client_id = $client_id;
-        $this->salesman_id = $salesman_id;
-        $this->creation_date = $creation_date;
-        $this->finish_date = $finish_date;
-        $this->total_price = $total_price;
+        $this->clientId = $clientId;
+        $this->salesmanId = $salesmanId;
+        $this->creationDate = $creationDate;
+        $this->finishDate = $finishDate;
+        $this->totalPrice = $totalPrice;
         $this->discount = $discount;
         $this->state = $state;
     }
 
     public function getClientId(): int
     {
-        return $this->client_id;
+        return $this->clientId;
     }
     
     public function getSalesmanId(): int
     {
-        return $this->salesman_id;
+        return $this->salesmanId;
     }
 
     public function getCreationDate()
     {
-        return $this->creation_date;
+        return $this->creationDate;
     }
 
     public function getFinishDate()
     {
-        return $this->finish_date;
+        return $this->finishDate;
     }
 
     public function getTotalPrice()
     {
-        return $this->total_price;
+        return $this->totalPrice;
     }
 
     public function getDiscount()

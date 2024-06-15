@@ -1,6 +1,6 @@
 <?php
 
-class Client {
+class Client implements JsonSerializable {
     private $firstName;
     private $lastName;
     private $city;
@@ -31,6 +31,21 @@ class Client {
         $this->phone = $phone;
         $this->email = $email;
         $this->id = $id;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'city' => $this->city,
+            'street' => $this->street,
+            'houseNumber' => $this->houseNumber,
+            'postalCode' => $this->postalCode,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'id' => $this->id,
+        ];
     }
 
     public function getFirstName(): string

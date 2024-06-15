@@ -2,6 +2,7 @@
 
 require_once 'AppController.php';
 require_once __DIR__.'../../repository/UserRepository.php';
+require_once __DIR__.'../../forms/UserForm.php';
 
 class UserController extends AppController {
     private $userRepository;
@@ -13,43 +14,57 @@ class UserController extends AppController {
     }
 
     public function users($req) {
-        $users = $this->userRepository->getUsersByRole('salesman');
+        $users = $this->userRepository->getUsers();
         $user = $req['user'];
-        $this->render('salesman-list', ['users' => $users, 'user' => $user]);
+        $this->render('salesman-list', [
+            'users' => $users,
+            'user' => $user,
+            'messages' => $messages
+        ]);
     }
 
     public function userDelete($req) {
         $id = $req['input'];
-        $this->userRepository->deleteUserById($id);
-        $messages = ['correct'];
-        $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/users");
+        $result = $this->userRepository->deleteUserById($id);
+
+        if ($result !== null) {
+            $this->redirect('internalServerError');
+        }
+        
+        $this->redirect('users');
     }
 
     public function userModify($req) {
-        if ($this->isPost()) {
-            $updatedUser = new User(
-                $_POST['email'],
-                '',
-                $_POST['first-name'],
-                $_POST['last-name'],
-                $_POST['license-code'],
-                $_POST['city'],
-                $_POST['street'],
-                $_POST['house-number'],
-                $_POST['postal-code'],
-                $_POST['role'],
-                $_POST['id']
-            );
+        $user = $req['user'];
 
-            $this->userRepository->updateUser($updatedUser);
-            $url = "http://$_SERVER[HTTP_HOST]";
-            header("Location: {$url}/users");
-        } 
+        if (!$this->isPost()) {
+            $id = $req['input'];
+            $_SESSION['lastUserToModifyId'] = $id;
+            $userToModify = $this->userRepository->getUserById($id);
+            $roles = $this->userRepository->getUserAvailableRoles();
+            return $this->render('salesman-modify', [
+                'user' => $user, 
+                'userToModify' => $userToModify, 
+                'roles' => $roles
+            ]);
+        }
 
-        $id = $req['input'];
-        $user = $this->userRepository->getUserById($id);
-        $roles = $this->userRepository->getUserAvailableRoles();
-        $this->render('salesman-modify', ['user' => $user, 'roles' => $roles]);
+        $_POST['password'] = '';
+        $userForm = new UserForm($_POST);
+        if (!$userForm->validate()) {
+            $messages = $this->createMessagesArray($userForm->getErrors(), Message::ERROR);
+            $roles = $this->userRepository->getUserAvailableRoles();
+            $userToModify = $this->userRepository->getUserById($_SESSION['lastUserToModifyId']);
+            return $this->render('salesman-modify', [
+                'roles' => $roles,
+                'user' => $user,
+                'userToModify' => $userToModify,
+                'messages' => $messages
+            ]);
+        }
+    
+        $updatedUser = $userForm->getValidatedModel();
+        $this->userRepository->updateUser($updatedUser);
+        $this->redirect('users');
     }
 }

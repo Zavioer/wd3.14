@@ -44,6 +44,14 @@ class AppController {
         echo $encoded;
     }
 
+    protected function createMessagesArray($messagesText, $messageType) {
+        $messages = [];
+        foreach($messagesText as $messageText) {
+            array_push($messages, new Message($messageText, $messageType));
+        }
+        return $messages;
+    }
+
     static public function redirect($actionName, $responseCode = 0, $exit = FALSE)
     {
         $url = "http://$_SERVER[HTTP_HOST]";

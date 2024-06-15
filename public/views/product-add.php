@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add product</title>
+    <link rel="icon" href="/public/img/endeal_favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="/public/css/main.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <?php include __DIR__.'/components/js-scripts-base.php'; ?>
@@ -37,7 +38,7 @@
                     </select>
 
                     <input type="text" required name="uom" placeholder="UOM" class="text-input-base">
-                    <input type="number" step="0.01" min="0" required name="quantity" placeholder="Quantity" class="text-input-base">
+                    <input type="number" step="1" min="1" value=1 required name="quantity" placeholder="Quantity" class="text-input-base">
                 </div>
 
                 <div class="form-button-section">

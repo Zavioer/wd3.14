@@ -11,63 +11,61 @@ $path = parse_url($path, PHP_URL_PATH);
 
 Router::get('', 'DefaultController');
 Router::get('dashboard', 'DefaultController', [
-    new AuthMiddleware()]);
+    new AuthorizationMiddleware('ORDER_READ'), new AuthMiddleware()]);
 Router::get('home', 'DefaultController', [
-    new AuthMiddleware()]);
+    new AuthorizationMiddleware('CLIENT_READ'), new AuthMiddleware()]);
 
 Router::get('forbidden', 'DefaultController');
 Router::get('unauthorized', 'DefaultController');
 Router::get('notFound', 'DefaultController');
+Router::get('internalServerError', 'DefaultController');
 
 Router::post('login', 'SecurityController');
 Router::post('register', 'SecurityController', [
     new AuthorizationMiddleware('USER_ADD'), new AuthMiddleware()]);
-Router::post('logout', 'SecurityController', [new AuthMiddleware()]);
-
+Router::get('logout', 'SecurityController', [new AuthMiddleware()]);
 
 Router::get('users', 'UserController', [
     new AuthorizationMiddleware('USER_READ'), new AuthMiddleware()]);
 Router::get('userDelete', 'UserController', [
     new AuthorizationMiddleware('USER_DELETE'), new AuthMiddleware()]);
-Router::get('userModify', 'UserController', [
+Router::post('userModify', 'UserController', [
     new AuthorizationMiddleware('USER_MODIFY'), new AuthMiddleware()]);
 
 Router::get('products', 'ProductController', [
     new AuthorizationMiddleware('PRODUCT_READ'), new AuthMiddleware()]);
-
 Router::get('productsMobile', 'ProductController', [
     new AuthorizationMiddleware('PRODUCT_READ'), new AuthMiddleware()]);
-
 Router::get('productDetail', 'ProductController', [
     new AuthorizationMiddleware('PRODUCT_READ'), new AuthMiddleware()]);
 Router::post('productAdd', 'ProductController', [
     new AuthorizationMiddleware('PRODUCT_ADD'), new AuthMiddleware()]);
-Router::post('productDelete', 'ProductController', [
+Router::get('productDelete', 'ProductController', [
     new AuthorizationMiddleware('PRODUCT_DELETE'), new AuthMiddleware()]);
 Router::post('productModify', 'ProductController', [
     new AuthorizationMiddleware('PRODUCT_MODIFY'), new AuthMiddleware()]);
 
 Router::get('clients', 'ClientController', [
     new AuthorizationMiddleware('CLIENT_READ'), new AuthMiddleware()]);
-Router::get('clientAdd', 'ClientController', [
+Router::post('clientAdd', 'ClientController', [
     new AuthorizationMiddleware('CLIENT_ADD'), new AuthMiddleware()]);
-Router::get('clientModify', 'ClientController', [
+Router::post('clientModify', 'ClientController', [
     new AuthorizationMiddleware('CLIENT_MODIFY'), new AuthMiddleware()]);
 Router::get('clientDelete', 'ClientController', [
     new AuthorizationMiddleware('CLIENT_DELETE'), new AuthMiddleware()]);
 Router::get('clientDetail', 'ClientController', [
     new AuthorizationMiddleware('CLIENT_READ'), new AuthMiddleware()]);
 
-Router::post('orders', 'OrderController', [
+Router::get('orders', 'OrderController', [
     new AuthorizationMiddleware('ORDER_READ'), new AuthMiddleware()]);
 Router::post('orderAdd', 'OrderController', [
     new AuthorizationMiddleware('ORDER_ADD'), new AuthMiddleware()]);
-Router::post('orderResolve', 'OrderController', [
+Router::get('orderResolve', 'OrderController', [
     new AuthorizationMiddleware('ORDER_MODIFY'), new AuthMiddleware()]);
 
 Router::get('ordersCountByProductType', 'ReportController', [
-    new AuthMiddleware()]);
+    new AuthorizationMiddleware('ORDER_READ'), new AuthMiddleware()]);
 Router::get('monthlyIncome', 'ReportController', [
-    new AuthMiddleware()]);
+    new AuthorizationMiddleware('ORDER_READ'), new AuthMiddleware()]);
 
 Router::run($path);

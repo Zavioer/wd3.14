@@ -29,6 +29,15 @@ class NullValidator implements Validator {
     }
 }
 
+class NotNullValidator implements Validator {
+    public function validate($input, $fieldName) {
+        if (is_null($input)) {
+            return "$fieldName must not be null.";
+        }
+        return null; // Validation passed
+    }
+}
+
 class ChoiceValidator implements Validator {
     private array $choices;
 
@@ -73,6 +82,16 @@ class RegexValidator implements Validator {
         if (!preg_match($this->pattern, $input)) {
             return "$fieldName does not match the required pattern.";
         }
+        return null; // Validation passed
+    }
+}
+
+class SpecialCharactersValidator implements Validator {
+    public function validate($input, $fieldName) {
+        if (preg_match('/[!@#$%^&*(),.?":{}|<>]/', $input)) {
+            return "$fieldName contains special characters which are not allowed.";
+        }
+
         return null; // Validation passed
     }
 }

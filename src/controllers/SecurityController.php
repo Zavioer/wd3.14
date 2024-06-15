@@ -3,6 +3,7 @@
 require_once 'AppController.php';
 require_once __DIR__.'../../repository/UserRepository.php';
 require_once __DIR__.'../../models/Role.php';
+require_once __DIR__.'../../forms/UserForm.php';
 
 class SecurityController extends AppController {
     private $userRepository;
@@ -97,59 +98,11 @@ class SecurityController extends AppController {
             return $this->render('salesman-add', ['roles' => $roles, 'user' => $user]);
         }
 
-        $email = $_POST['email'];
-        $password = $this->generateTemporaryPassword(); 
-        $firstName = $_POST['first-name'];
-        $lastName = $_POST['last-name'];
-        $licenseCode = $_POST['licence-code'];
-        $city = $_POST['city'];
-        $street = $_POST['street'];
-        $houseNumber = $_POST['house-number'];
-        $postalCode = $_POST['postal-code'];
-        $roleId = $_POST['role'];
+        $_POST['password'] = $this->generateTemporaryPassword(); 
+        $userForm = new UserForm($_POST);
 
-        $baseValidator = new ValidatorExecutor([
-            new TextLengthValidator(3, 255)
-        ]);
-
-        $firstNameErrors = $baseValidator->run($firstName, 'First Name');
-        $lastNameErrors = $baseValidator->run($lastName, 'Last Name');
-
-        $emailValidator = new ValidatorExecutor([
-            new EmailValidator()
-        ]);
-        $emailErrors = $emailValidator->run($email, 'Email');
-
-        $licenseCodeErrors = $baseValidator->run($licenseCode, 'License Code');
-        $cityErrors = $baseValidator->run($city, 'City');
-        $streetErrors = $baseValidator->run($street, 'Street');
-        
-        $houseNumberValidator = new ValidatorExecutor([
-            new TextLengthValidator(0, 10)
-        ]);
-        $houseNumberErrors = $houseNumberValidator->run($houseNumber, 'House Number');
-
-        $postalCodeValidator = new ValidatorExecutor([
-            new TextLengthValidator(0, 5)
-        ]);
-        $postalCodeErrors = $postalCodeValidator->run($postalCode, 'Postal Code');
-
-        $errors = array_merge(
-            $firstNameErrors,
-            $lastNameErrors,
-            $emailErrors,
-            $licenseCodeErrors,
-            $cityErrors,
-            $streetErrors,
-            $houseNumberErrors,
-            $postalCodeErrors,
-        );
-
-        if (!empty($errors)) {
-            $messages = [];
-            foreach($errors as $errorText) {
-                array_push($messages, new Message($errorText, Message::ERROR));
-            }
+        if (!$userForm->validate()) {
+            $messages = $this->createMessagesArray($userForm->getErrors(), Message::ERROR);
             $roles = $this->userRepository->getUserAvailableRoles();
             $user = $req['user'];
             return $this->render('salesman-add', [
@@ -159,26 +112,11 @@ class SecurityController extends AppController {
             ]);
         }
 
-        $newUser = new User(
-            $email, 
-            password_hash($password, PASSWORD_DEFAULT), 
-            $firstName, 
-            $lastName,
-            $licenseCode,
-            $city,
-            $street,
-            $houseNumber,
-            $postalCode,
-            $roleId
-        );
-
+        $newUser = $userForm->getValidatedModel();
         $result = $this->userRepository->addUser($newUser);
         if ($result === null) {
-            $this->saveTmpPasswordToFile($password);
-            $this->redirect('salesman-list');
-            $messages = [
-                new Message('Successfully added new worker!', Message::SUCCESS),
-            ];
+            $this->saveTmpPasswordToFile($_POST['password']);
+            $this->redirect('users');
         } else {
             if ($result->getCode() == 23505) {
                 $messages = [new Message('User with given name or licence code already exists!', Message::ERROR)];

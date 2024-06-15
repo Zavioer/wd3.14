@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add order</title>
+    <link rel="icon" href="/public/img/endeal_favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="/public/css/mobile.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <?php include __DIR__.'/components/js-scripts-base.php'; ?>
@@ -26,7 +27,7 @@
                         <hr>
                         <?php if(isset($clients)): ?>
                             <?php foreach($clients as $client): ?>
-                                <option value=<?= $client->getId(); ?>><?= $client->getFirstName().' '.$client->getLastName(); ?></option>
+                                <option value="<?= $client->getId(); ?>"><?= $client->getFirstName().' '.$client->getLastName(); ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </select>
@@ -37,6 +38,8 @@
                     <input type="text" required name="street" placeholder="Street" class="text-input-base">
                     <input type="text" required name="house-number" placeholder="House number" class="text-input-base">
                     <input type="text" required name="postal-code" placeholder="Postal code" class="text-input-base">
+                    <input type="text" required name="phone" placeholder="Phone" class="text-input-base">
+                    <input type="text" required name="email" placeholder="Email" class="text-input-base">
 
                     <select name="product" required id="product-select" class="select-base select-input-base">
                         <option value="">Choose product</option>
@@ -48,8 +51,8 @@
                         <?php endif; ?>
                     </select>
                             
-                    <input type="number" required min="0" name="amount" placeholder="Amount" class="text-input-base">
-                    <input type="number" step="0.01" required min="0" max="1" name="discount" placeholder="Discount" class="text-input-base">
+                    <input type="number" required min="0" name="amount" value="1" placeholder="Amount" class="text-input-base">
+                    <input type="number" step="0.01" required min="0" max="1" value="0" name="discount" placeholder="Discount" class="text-input-base">
                     <button type="submit" class="button-base">ADD</button>
                 </div>
             </form>

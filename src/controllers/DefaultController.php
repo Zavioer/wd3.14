@@ -2,14 +2,17 @@
 
 require_once 'AppController.php';
 require_once __DIR__.'../../repository/ProductRepository.php';
+require_once __DIR__.'../../repository/ClientRepository.php';
 
 class DefaultController extends AppController {
     private $productRepository;
+    private $clientRepository;
 
     public function __construct()
     {
         parent::__construct();
         $this->productRepository = new ProductRepository();
+        $this->clientRepository = new ClientRepository();
     }
 
     public function index() {
@@ -23,8 +26,10 @@ class DefaultController extends AppController {
         $this->render('dashboard', ['user' => $user, 'products' => $products]);
     }
 
-    public function home() {
-        $this->render('home');
+    public function home($req) {
+        $user = $req['user'];
+        $clients = $this->clientRepository->getClientsForSalesman($user->getId());
+        $this->render('home', ['clients' => $clients]);
     }
 
     public function forbidden() {
@@ -37,5 +42,10 @@ class DefaultController extends AppController {
 
     public function notFound() {
         $this->render('/errors/404');
+    }
+
+    public function internalServerError() {
+        http_response_code(500);
+        $this->render('/errors/500');
     }
 }
