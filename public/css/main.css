@@ -21,6 +21,7 @@ html {
 body {
     height: 100%;
     margin: 0;
+    background-color: var(--background-color);
 
     font-family: "Heebo", sans-serif;
     font-optical-sizing: auto;
@@ -131,7 +132,7 @@ footer {
         transform: left 0.3s ease;
         background-color: whitesmoke;
         z-index: 1;
-        margin-top: 7vh;
+        margin-top: 4rem;
         width: 70%;
     }
 

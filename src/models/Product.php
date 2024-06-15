@@ -13,14 +13,14 @@ class Product {
     private $type;
 
     public function __construct(
-        int $id,
         string $name,
         string $upc,
         string $description,
         float $price,
         string $uom,
         int $productTypeId,
-        string $imgPath
+        ?string $imgPath,
+        int $id = -1
     ) {
         $this->id = $id;
         $this->name = $name;

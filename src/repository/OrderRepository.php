@@ -6,28 +6,8 @@ require_once __DIR__.'/../models/OrderDetailed.php';
 
 class OrderRepository extends Repository
 {
-    public function addOrder(Order $order)
-    {
-        $stmt = $this->database->connect()->prepare('
-            INSERT INTO order (
-                client_id, salesman_id, creation_date, finish_date, total_price,
-                discount, state
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ');
-         
-        $stmt->execute([
-            $product->getClientId(),
-            $product->getSalesmanId(),
-            $product->getCreationDate(),
-            $product->getFinishDate(),
-            $product->getTotalPrice(),
-            $product->getDiscount(),
-            $product->getState()
-        ]);
-    }
 
-    public function addOrderV2($clientId, $salesmanId, $productId, $amount, $discount)
+    public function addOrder($clientId, $salesmanId, $productId, $amount, $discount)
     {
         $stmt = $this->database->connect()->prepare('
             SELECT create_order(:clientId, :salesmanId, :productId, :amount, :discount)
@@ -99,63 +79,6 @@ class OrderRepository extends Repository
         }
 
         return $orders;
-    }
-
-    public function getProductById(int $id)
-    {
-        $stmt = $this->database->connect()->prepare('
-            SELECT * FROM product
-            WHERE id = :id
-        ');
-         
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $product = new Product(
-            $result['id'],
-            $result['name'],
-            $result['upc'],
-            $result['description'],
-            $result['price'],
-            $result['uom'],
-            $result['product_type_id']
-        );
-
-        return $product;
-    }
-    
-    public function updateProduct(Product $updatedProduct)
-    {
-        $stmt = $this->database->connect()->prepare('
-            UPDATE product SET
-            name = ?,
-            upc = ?,
-            description = ?,
-            price = ?,
-            uom = ?,
-            product_type_id = ?
-            WHERE id = ?
-        ');
-        $stmt->execute([
-            $updatedProduct->getName(),
-            $updatedProduct->getUpc(),
-            $updatedProduct->getDescription(),
-            $updatedProduct->getPrice(),
-            $updatedProduct->getUom(),
-            $updatedProduct->getProductTypeId(),
-            $updatedProduct->getId()
-        ]);
-    }
-
-    public function deleteProduct(int $id)
-    {
-        $stmt = $this->database->connect()->prepare('
-            DELETE FROM product WHERE id = :id
-        ');
-
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
     }
 
     public function resolveOrder(int $id)

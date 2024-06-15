@@ -3,41 +3,40 @@
 class User {
     private $email;
     private $password;
-    private $first_name;
-    private $last_name;
-    private $licence_code;
+    private $firstName;
+    private $lastName;
+    private $licenceCode;
     private $city;
     private $street;
-    private $house_number;
-    private $postal_code;
+    private $houseNumber;
+    private $postalCode;
     private $role_id;
     private $id;
     private $role;
-    private $isAuthorized = FALSE;
     private $permission = [];
 
     public function __construct(
         string $email,
         string $password,
-        string $first_name,
-        string $last_name,
-        string $licence_code,
+        string $firstName,
+        string $lastName,
+        string $licenceCode,
         string $city,
         string $street,
-        string $house_number,
-        string $postal_code,
+        string $houseNumber,
+        string $postalCode,
         int $role_id,
         int $id = -1
     ) {
         $this->email = $email;
         $this->password = $password;
-        $this->first_name = $first_name;
-        $this->last_name = $last_name;
-        $this->licence_code = $licence_code;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->licenceCode = $licenceCode;
         $this->city = $city;
         $this->street = $street;
-        $this->house_number = $house_number;
-        $this->postal_code = $postal_code;
+        $this->houseNumber = $houseNumber;
+        $this->postalCode = $postalCode;
         $this->role_id = $role_id;
         $this->id = $id;
     }
@@ -54,22 +53,22 @@ class User {
 
     public function getFirstName(): string
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
     public function setFirstName(string $name): void
     {
-        $this->last_name = $name;
+        $this->lastName = $name;
     }
 
     public function getLastName(): string
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
     public function getLicenceCode(): string
     {
-        return $this->licence_code;
+        return $this->licenceCode;
     }
     public function getCity(): string
     {
@@ -81,11 +80,11 @@ class User {
     }
     public function getHouseNumber(): string
     {
-        return $this->house_number;
+        return $this->houseNumber;
     }
     public function getPostalCode(): string
     {
-        return $this->postal_code;
+        return $this->postalCode;
     }
     public function getRoleId(): string
     {
@@ -104,16 +103,6 @@ class User {
     public function setRole($role)
     {
         $this->role = $role;
-    }
-
-    public function authorize()
-    {
-        $this->isAuthorized = True;
-    }
-
-    public function isAuthorized()
-    {
-        return $this->isAuthorized();
     }
 
     public function setPermissions($permissions)

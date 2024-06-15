@@ -4,9 +4,13 @@ require_once 'AppController.php';
 require_once __DIR__.'../../repository/OrderRepository.php';
 require_once __DIR__.'../../repository/ProductRepository.php';
 require_once __DIR__.'../../repository/ClientRepository.php';
+require_once __DIR__.'../../forms/ClientForm.php';
+require_once __DIR__.'../../forms/OrderForm.php';
 
 class OrderController extends AppController {
     private $orderRepository;
+    private $productRepository;
+    private $clientRepository;
 
     public function __construct()
     {
@@ -16,68 +20,31 @@ class OrderController extends AppController {
         $this->clientRepository = new ClientRepository();
     }
         
-    public function orderAdd() {
+    public function orderAdd($req) {
+        $user = $req['user'];
         if (!$this->isPost()) {
             $products = $this->productRepository->getProducts();
             $clients = $this->clientRepository->getClients();
             return $this->render('order-add', ['products' => $products, 'clients' => $clients]);
         }
 
-        $product = $_POST['product'];
-        $amount = $_POST['amount'];
-        $discount = $_POST['discount'];
+        $clientForm = new ClientForm($_POST); 
+        if (!$clientForm->validate()) {
+            $messages = $this->createMessagesArray($clientForm->getErrors(), Message::ERROR);
+            $products = $this->productRepository->getProducts();
+            $clients = $this->clientRepository->getClients();
+            return $this->render('order-add', [
+                'products' => $products,
+                'clients' => $clients,
+                'messages' => $messages
+            ]);
+        }
+        $maybeNewClient = $clientForm->getValidatedModel();
+        $client = $this->clientRepository->getOrAddClient($maybeNewClient);
 
-        $firstName = $_POST['first-name'];
-        $lastName = $_POST['last-name'];
-        $city = $_POST['city'];
-        $street = $_POST['street'];
-        $houseNumber = $_POST['house-number'];
-        $postalCode = $_POST['postal-code'];
-        $companyName = $_POST['company-name'] ?? '';
-        $baseValidator = new ValidatorExecutor([
-            new TextLengthValidator(3, 255)
-        ]);
-
-        $firstNameErrors = $baseValidator->run($firstName, 'First Name');
-        $lastNameErrors = $baseValidator->run($lastName, 'Last Name');
-        $cityErrors = $baseValidator->run($city, 'City');
-        $streetErrors = $baseValidator->run($street, 'Street');
-        
-        $houseNumberValidator = new ValidatorExecutor([
-            new TextLengthValidator(0, 10)
-        ]);
-        $houseNumberErrors = $houseNumberValidator->run($houseNumber, 'House Number');
-
-        $postalCodeValidator = new ValidatorExecutor([
-            new TextLengthValidator(0, 6)
-        ]);
-        $postalCodeErrors = $postalCodeValidator->run($postalCode, 'Postal Code');
-
-        $errors = array_merge(
-            $firstNameErrors,
-            $lastNameErrors,
-            $cityErrors,
-            $streetErrors,
-            $houseNumberErrors,
-            $postalCodeErrors,
-        );
-        
-        $maybeNewClient = new Client(
-            $_POST['first-name'],
-            $_POST['last-name'],
-            $_POST['city'],
-            $_POST['street'],
-            $_POST['house-number'],
-            $_POST['postal-code'],
-            $_POST['company-name'] ?? '',
-            0
-        );
-
-        if (!empty($errors)) {
-            $messages = [];
-            foreach($errors as $errorText) {
-                array_push($messages, new Message($errorText, Message::ERROR));
-            }
+        $orderForm = new OrderForm($_POST); 
+        if (!$orderForm->validate()) {
+            $messages = $this->createMessagesArray($orderForm->getErrors(), Message::ERROR);
             $products = $this->productRepository->getProducts();
             $clients = $this->clientRepository->getClients();
             return $this->render('order-add', [
@@ -87,24 +54,16 @@ class OrderController extends AppController {
             ]);
         }
 
-        $client = $this->clientRepository->getOrAddClient($maybeNewClient);
+        $product = $_POST['product'];
+        $amount = $_POST['amount'];
+        $discount = $_POST['discount'];
 
-        $amountValidator = new ValidatorExecutor([
-            new NumberInRangeValidator(0)
-        ]);
-        $amountErrors = $amountValidator->run($amount, 'Amount');
-
-        $discountValidator = new ValidatorExecutor([
-            new NumberInRangeValidator(0, 1)
-        ]);
-        $discountErrors = $discountValidator->run($discount, 'Discount');
-
-        $this->orderRepository->addOrderV2(
+        $this->orderRepository->addOrder(
             $client->getId(),
-            $_SESSION['user_id'],
-            (int)$_POST['product'],
-            $_POST['amount'],
-            $_POST['discount']
+            $user->getId(),
+            (int)$product,
+            $amount,
+            $discount
         );
 
         $products = $this->productRepository->getProducts();
@@ -131,7 +90,6 @@ class OrderController extends AppController {
     public function orderResolve($req) {
         $orderId = $req['input'];
         $this->orderRepository->resolveOrder($orderId);
-        $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/orders");
+        $this->redirect('orders');
     }
 }

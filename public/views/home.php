@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile home</title>
+    <link rel="icon" href="/public/img/endeal_favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="/public/css/mobile.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -65,38 +66,18 @@
         <div>
             <h3>CLIENTS</h3>
             <div class="badges-list">
-                <div class="badge-base">
-                    <img src="" alt="badge img placeholder">
-                    <div class="badge-base-content">
-                        <h4>Anna Kowalska</h4>
-                        <p>City: Krakow</p>
-                        <p>Street: Kolorowa</p>
-                    </div>
-                </div>
-                <div class="badge-base">
-                    <img src="" alt="badge img placeholder">
-                    <div class="badge-base-content">
-                        <h4>Anna Kowalska</h4>
-                        <p>City: Krakow</p>
-                        <p>Street: Kolorowa</p>
-                    </div>
-                </div>
-                <div class="badge-base">
-                    <img src="" alt="badge img placeholder">
-                    <div class="badge-base-content">
-                        <h4>Anna Kowalska</h4>
-                        <p>City: Krakow</p>
-                        <p>Street: Kolorowa</p>
-                    </div>
-                </div>
-                <div class="badge-base">
-                    <img src="" alt="badge img placeholder">
-                    <div class="badge-base-content">
-                        <h4>Anna Kowalska</h4>
-                        <p>City: Krakow</p>
-                        <p>Street: Kolorowa</p>
-                    </div>
-                </div>
+                <?php if (isset($clients)): ?> 
+                    <?php foreach ($clients as $client): ?>  
+                        <div class="badge-base">
+                            <div class="badge-base-content">
+                                <h4><?= $client->getFirstName() ?> <?= $client->getLastName() ?></h4>
+                                <p>Address: <?= $client->getCity() ?> <?= $client->getStreet() ?> <?= $client->getHouseNumber() ?></p>
+                                <p>Phone: <?= $client->getPhone() ?></p>
+                                <p>Email: <?= $client->getEmail() ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>

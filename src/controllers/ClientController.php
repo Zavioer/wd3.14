@@ -2,6 +2,7 @@
 
 require_once 'AppController.php';
 require_once __DIR__.'../../repository/ClientRepository.php';
+require_once __DIR__.'../../forms/ClientForm.php';
 
 class ClientController extends AppController {
     private $clientRepository;
@@ -10,38 +11,6 @@ class ClientController extends AppController {
     {
         parent::__construct();
         $this->clientRepository = new ClientRepository();
-    }
-        
-    public function addClient($req) {
-        if (!$this->isPost()) {
-            $user = $req['user'];
-            return $this->render('client-add-d', ['user' => $user]);
-        }
-
-        $firstName = $_POST['first-name'];
-        $lastName = $_POST['last-name'];
-        $city = $_POST['city'];
-        $street = $_POST['street'];
-        $houseNumber = $_POST['house-number'];
-        $postalCode = $_POST['postal-code'];
-        $companyName = $_POST['company-name'] ?? '';
-
-        $client = new Client(
-            $firstName,
-            $lastName,
-            $city,
-            $street,
-            $houseNumber,
-            $postalCode,
-            $companyName,
-            0 // temporary id not used in insert
-        );
-        $this->clientRepository->addClient($client);
-
-        $messages = [
-            new Message('Client succesfully added!', Message::SUCCESS),
-        ];
-        return $this->render('client-add-d', ['messages' => $messages]);
     }
 
     public function clients($req) {
@@ -52,29 +21,49 @@ class ClientController extends AppController {
 
     public function clientDetail($req) {
         $id = $req['input'];
+        $client = $this->clientRepository->getClientById($id);
         
         if ($_GET['type'] === 'json') {
-            $client = $this->clientRepository->getClientById($id, true);
             $this->jsonify($client);
         }
 
-        $client = $this->clientRepository->getClientById($id);
         return $client;
     }
 
     public function clientDelete($req) {
         $id = $req['input'];
-        $this->clientRepository->deleteClientById($id);
-        $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/clients");
+        $result = $this->clientRepository->deleteClientById($id);
+
+        if ($result !== null) {
+            $this->redirect('internalServerError');
+        }
+
+        $this->redirect('clients');        
     }
 
     public function clientModify($req) {
+        $user = $req['user'];
+
         if (!$this->isPost()) {
             $id = $req['input'];
-            $user = $req['user'];
+            $_SESSION['lastClientId'] = $id;
             $client = $this->clientRepository->getClientById($id);
-            $this->render('client-modify', ['client' => $client, 'user' => $user]);
+            return $this->render('client-modify', ['client' => $client, 'user' => $user]);
         }
+
+        $clientForm = new ClientForm($_POST);
+        if (!$clientForm->validate()) {
+            $messages = $this->createMessagesArray($clientForm->getErrors(), Message::ERROR);
+            $client = $this->clientRepository->getClientById($_SESSION['lastClientId']);
+            return $this->render('client-modify', [
+                'messages' => $messages,
+                'client' => $client,
+                'user' => $user
+            ]);
+        }
+
+        $updatedClient = $clientForm->getValidatedModel();
+        $result = $this->clientRepository->updateClient($updatedClient);
+        $this->redirect('clients');
     }
 }

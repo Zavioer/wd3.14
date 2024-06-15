@@ -5,8 +5,7 @@ require_once __DIR__.'/../models/Client.php';
 
 class ClientRepository extends Repository
 {
-
-    public function getClientById(int $id, $raw=false)
+    public function getClientById(int $id)
     {
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM client c 
@@ -21,10 +20,6 @@ class ClientRepository extends Repository
             return null;
         }
 
-        if ($raw) {
-            return $result;
-        }
-
         $client = new Client(
             $result['first_name'],
             $result['last_name'],
@@ -36,7 +31,6 @@ class ClientRepository extends Repository
             $result['email'],
             $result['id']
         );
-
         return $client;
     }
 
@@ -65,7 +59,7 @@ class ClientRepository extends Repository
     public function getOrAddClient(Client $client)
     {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM get_or_insert_client(?, ?, ?, ?, ?, ?, ?)
+            SELECT * FROM get_or_insert_client(?, ?, ?, ?, ?, ?, ?, ?)
         ');
 
         $stmt->execute([
@@ -75,7 +69,8 @@ class ClientRepository extends Repository
             $client->getStreet(),
             $client->getHouseNumber(),
             $client->getPostalCode(),
-            $client->getCompanyName()
+            $client->getPhone(),
+            $client->getEmail()
         ]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -104,7 +99,7 @@ class ClientRepository extends Repository
             house_number = ?,
             postal_code = ?,
             phone = ?,
-            email = ?,
+            email = ?
             WHERE id = ?
         ');
         $stmt->execute([
@@ -115,7 +110,8 @@ class ClientRepository extends Repository
             $client->getHouseNumber(),
             $client->getPostalCode(),
             $client->getPhone(),
-            $client->getEmail()
+            $client->getEmail(),
+            $client->getId(),
         ]);
     }
 
@@ -147,12 +143,47 @@ class ClientRepository extends Repository
         return $clients;
     }
 
-    public function deleteClientById(int $id) {
+    public function getClientsForSalesman($id) {
         $stmt = $this->database->connect()->prepare('
-            DELETE FROM client
-            WHERE id = :id
+            SELECT DISTINCT ON (c.id) c.* 
+            FROM client c 
+            JOIN orders o ON c.id = o.client_id
+            WHERE o.salesman_id = :id
         ');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $clients = []; 
+
+        foreach ($result as $client) {
+            $newClient = new Client(
+                $client['first_name'],
+                $client['last_name'],
+                $client['city'],
+                $client['street'],
+                $client['house_number'],
+                $client['postal_code'],
+                $client['phone'],
+                $client['email'],
+                $client['id']
+            );
+            array_push($clients, $newClient);
+        } 
+
+        return $clients;
+    }
+
+    public function deleteClientById(int $id) {
+        try {
+            $stmt = $this->database->connect()->prepare('
+                DELETE FROM client
+                WHERE id = :id
+            ');
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch(PDOException $e) {
+            return $e;
+        }
     }
 }

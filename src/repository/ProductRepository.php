@@ -45,14 +45,14 @@ class ProductRepository extends Repository
 
         foreach ($result as $product) {
             $newProduct = new Product(
-                $product['id'],
                 $product['name'],
                 $product['upc'],
                 $product['description'],
                 $product['price'],
                 $product['uom'],
                 $product['product_type_id'],
-                $product['img_path']
+                $product['img_path'],
+                $product['id']
             );
             $quantity = $this->getProductWarehouseQuantity($newProduct->getId());
             $newProduct->setWarehouseQuantity($quantity);
@@ -77,14 +77,14 @@ class ProductRepository extends Repository
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $product = new Product(
-                $result['id'],
                 $result['name'],
                 $result['upc'],
                 $result['description'],
                 $result['price'],
                 $result['uom'],
                 $result['product_type_id'],
-                $result['img_path']
+                $result['img_path'],
+                $result['id']
             );
             $quantity = $this->getProductWarehouseQuantity($product->getId());
             $product->setWarehouseQuantity($quantity);
@@ -173,7 +173,6 @@ class ProductRepository extends Repository
 
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return new ProductType(
@@ -189,7 +188,6 @@ class ProductRepository extends Repository
         ');
 
         $stmt->execute();
-
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $productTypes = [];
 

@@ -156,6 +156,40 @@ class UserRepository extends Repository
         return $users;
     }
 
+    public function getUsers() {
+        $stmt = $this->database->connect()->prepare('
+            SELECT u.* 
+            FROM user_account u 
+            JOIN role r ON u.role_id = r.id 
+            WHERE r.name <> \'admin\' 
+        ');
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $users = []; 
+
+        foreach ($result as $user) {
+            $newUser = new User(
+                $user['email'],
+                $user['password'],
+                $user['first_name'],
+                $user['last_name'],
+                $user['license_code'],
+                $user['city'],
+                $user['street'],
+                $user['house_number'],
+                $user['postal_code'],
+                $user['role_id'],
+                $user['id']
+            );
+            $role = $this->getUserRoleById($newUser->getRoleId());
+            $newUser->setRole($role);
+            array_push($users, $newUser);
+        } 
+
+        return $users;
+    }
+
     public function addUser(User $user)
     {
         try {
@@ -213,12 +247,16 @@ class UserRepository extends Repository
     }
 
     public function deleteUserById(int $id) {
-        $stmt = $this->database->connect()->prepare('
-            DELETE FROM user_account
-            WHERE id = :userId
-        ');
-        $stmt->bindParam(':userId', $id, PDO::PARAM_STR);
-        $stmt->execute();
+        try {
+            $stmt = $this->database->connect()->prepare('
+                DELETE FROM user_account
+                WHERE id = :userId
+            ');
+            $stmt->bindParam(':userId', $id, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            return $e;
+        }
     }
 
     public function registerLoginSession(User $user, string $sessionId) {
@@ -265,6 +303,7 @@ class UserRepository extends Repository
         $stmt = $this->database->connect()->prepare('
             SELECT r.* 
             FROM role r 
+            WHERE r.name <> \'admin\'
             ORDER BY r.id
         ');
         $stmt->execute();
